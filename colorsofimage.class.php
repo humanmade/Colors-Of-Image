@@ -211,7 +211,7 @@ class ColorsOfImage {
 		}
 
 		$differencearray = array();
-		$colors = self::getPalette();
+		$colors = $this->getPalette();
 
 		foreach ($colors as $key => $value) {
 			$value = $value['rgb'];
@@ -238,7 +238,7 @@ class ColorsOfImage {
 		return self::de_1994( $lab2, $lab1 );
 	} 
 
-	private static function getPalette() {
+	private function getPalette() {
 
 		if ( isset( $this->_palette ) )
 			return $this->_palette;
