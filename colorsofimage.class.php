@@ -184,7 +184,7 @@ class ColorsOfImage {
 		return "x= ".$width."y= ".$height;
 	}
 
-	public function getProminentColors( $count = 4 ) {
+	public function getProminentColors() {
 
 		$pixels 		= $this->getPercentageOfColors();
 		$bg_color 		= $this->getBackgroundColor();
@@ -201,9 +201,7 @@ class ColorsOfImage {
 			$_c[] = $key;
 		}
 
-		$colors = array_slice( $_c, 0, $count );
-
-		return $colors;
+		return $_c;
 	}
 
 	private function getClosestColor($r, $g, $b){
