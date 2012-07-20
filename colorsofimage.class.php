@@ -109,7 +109,7 @@ class ColorsOfImage {
 		return null;
 	}
 	
-	public private function RGBToHex($r, $g, $b){
+	private function RGBToHex($r, $g, $b){
 	
 		$hex = "#";
 		$hex.= str_pad( dechex($r), 2, "0", STR_PAD_LEFT );
@@ -281,6 +281,7 @@ class ColorsOfImage {
 		 $l= 116*$_y -16;
 		 $a= 500*($_x-$_y);
 		 $b= 200*($_y-$_z);
+		 
 		 return(array($l,$a,$b));
 	}
 
