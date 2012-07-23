@@ -22,6 +22,8 @@ class ColorsOfImage {
 	var $trueper;
 	var $color_map = array();
 	var $_palette = array();
+	var $_min_percentage = 10;
+	var $_excluded_colors = array( '#FFFFFF' );
 
 	static $hit_pixels = 0;
 	static $missed_pixels = 0;
@@ -34,7 +36,14 @@ class ColorsOfImage {
 		$this->getImageSize();
 		$this->precision = $precision;
 
-		$this->readPixels();		
+		$this->readPixels();
+
+		$bg_color = $this->getBackgroundColor();
+		$this->_excluded_colors[] = $this->RGBToHex( $bg_color[0], $bg_color[1], $bg_color[2] );;
+	}
+
+	public function setMinPercentage( $num ) {
+		$this->_min_percentage = $num;
 	}
 
 	public function readPixels() {
@@ -141,9 +150,16 @@ class ColorsOfImage {
 		$coinciditions = $this->coinciditions;
 	
 		$total = 0;
+
 		foreach ($coinciditions as $color => $cuantity) {
-			$total += $cuantity;
+
+			if ( in_array( $color, $this->_excluded_colors ) )
+				unset( $coinciditions[$color] );
+
+			else
+				$total += $cuantity;
 		}
+
 		foreach ($coinciditions as $color => $cuantity) {
 			$percentage = (($cuantity/$total)*100);
 			$finallyarray["$color"] = $percentage;
@@ -190,9 +206,10 @@ class ColorsOfImage {
 		$bg_color 		= $this->getBackgroundColor();
 		$bg_color_hex 	= $this->RGBToHex( $bg_color[0], $bg_color[1], $bg_color[2] );
 
-		foreach ($pixels as $key => $value) {
-			if (  in_array( $key, array( '#FFFFFF', $bg_color_hex ) ) )
-				unset( $pixels[$key] );
+
+		foreach ($pixels as $color => $value) {
+			if ( $value < $this->_min_percentage )
+				unset( $pixels[$color] );
 		}
 
 		$_c = array();
