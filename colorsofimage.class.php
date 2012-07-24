@@ -148,7 +148,7 @@ class ColorsOfImage {
 	private function getPercentageOfColors(){
 	
 		$coinciditions = $this->coinciditions;
-	
+
 		$total = 0;
 
 		foreach ($coinciditions as $color => $cuantity) {
@@ -165,13 +165,16 @@ class ColorsOfImage {
 			$finallyarray["$color"] = $percentage;
 		}
 
+		if ( ! $coinciditions )
+			return array();
+
 		asort($finallyarray);
 		array_keys($finallyarray);
 		$outputarray = array_slice(array_reverse($finallyarray), 0, $this->maxnumcolors);
 	
 		$trueper = $this->trueper;
 	
-		if( $trueper ) {
+		if( $trueper && $outputarray ) {
 		
 			   $total = 0;
 			   foreach ($outputarray as $color => $cuantity) {
