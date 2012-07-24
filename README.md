@@ -1,9 +1,13 @@
 Colors-Of-Image
 ===============
 
-Color of Image is used to extract a color palette from a given image. Aside from being a native PHP implementation, Color of Image differes from many palette extracters as it works off a white list color palette.
+Color of Image is used to extract a color palette from a given image. Aside from being a native PHP implementation, Color of Image differes from many palette extracters as it works off a white list color palette. Below is the default palette:
+
+![](https://dl.dropbox.com/u/238502/Captured/RUf54.png)
 
 The main advanage of working from a color palette is closer matching, as each pixel simply has to calculate the color-distance within the palatte and chose the best match. This is useful for working with color taxonomies as the taxonomy should have a finate amount of colors. 
+
+![](https://dl.dropbox.com/u/238502/Captured/HphVw.png)
 
 Usage
 __________
