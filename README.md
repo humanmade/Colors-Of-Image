@@ -9,6 +9,8 @@ The main advanage of working from a color palette is closer matching, as each pi
 
 ![](https://dl.dropbox.com/u/238502/Captured/HphVw.png)
 
+See an example of this in action here: http://www.rufflr.com/search/?color=ffcc33
+
 Usage
 __________
 
