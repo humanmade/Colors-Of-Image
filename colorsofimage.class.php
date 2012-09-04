@@ -95,19 +95,26 @@ class ColorsOfImage {
 		return true;
 	}
 
-	public function getBackgroundColor() {
+	public function getBackgroundColor( $use_palette = true ) {
 
 		$top_left_color = imagecolorsforindex( $this->workingImage, imagecolorat( $this->workingImage, 0, 0) );
-		$top_left = $this->getClosestColor( $top_left_color['red'], $top_left_color['green'], $top_left_color['blue'] );
+		$top_left = array( $top_left_color['red'], $top_left_color['green'], $top_left_color['blue'] );
 
 		$top_right_color = imagecolorsforindex( $this->workingImage, imagecolorat( $this->workingImage, $this->width - 1, 0 ) );
-		$top_right = $this->getClosestColor( $top_right_color['red'], $top_right_color['green'], $top_right_color['blue'] );
+		$top_right = array( $top_right_color['red'], $top_right_color['green'], $top_right_color['blue'] );
 		
 		$bottom_left_color = imagecolorsforindex( $this->workingImage, imagecolorat( $this->workingImage, 0, $this->height - 1 ) );
-		$bottom_left = $this->getClosestColor( $bottom_left_color['red'], $bottom_left_color['green'], $bottom_left_color['blue'] );
+		$bottom_left = array( $bottom_left_color['red'], $bottom_left_color['green'], $bottom_left_color['blue'] );
 
 		$bottom_right_color = imagecolorsforindex( $this->workingImage, imagecolorat( $this->workingImage, $this->width - 1, $this->height - 1 ) );
-		$bottom_right = $this->getClosestColor( $bottom_right_color['red'], $bottom_right_color['green'], $bottom_right_color['blue'] );
+		$bottom_right = array( $bottom_right_color['red'], $bottom_right_color['green'], $bottom_right_color['blue'] );
+
+		if ( $use_palette ) {
+			$top_left 		= call_user_method_array( 'getClosestColor', $this, $top_left );
+			$top_right 		= call_user_method_array( 'getClosestColor', $this, $top_right );
+			$bottom_right 	= call_user_method_array( 'getClosestColor', $this, $bottom_right );
+			$bottom_left 	= call_user_method_array( 'getClosestColor', $this, $bottom_left );
+		}
 
 		$colors = array( $top_left, $top_right, $bottom_left, $bottom_right);
 
@@ -118,7 +125,7 @@ class ColorsOfImage {
 		return null;
 	}
 	
-	private function RGBToHex($r, $g, $b){
+	static public function RGBToHex($r, $g, $b){
 	
 		$hex = "#";
 		$hex.= str_pad( dechex($r), 2, "0", STR_PAD_LEFT );
@@ -128,7 +135,7 @@ class ColorsOfImage {
 		return strtoupper($hex);
 	}
 
-	static private function HexToRGB($hex) {
+	static public function HexToRGB($hex) {
 	   $hex = str_replace("#", "", $hex);
 	 
 	   if(strlen($hex) == 3) {
