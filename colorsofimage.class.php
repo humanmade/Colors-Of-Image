@@ -110,10 +110,10 @@ class ColorsOfImage {
 		$bottom_right = array( $bottom_right_color['red'], $bottom_right_color['green'], $bottom_right_color['blue'] );
 
 		if ( $use_palette ) {
-			$top_left 		= call_user_method_array( 'getClosestColor', $this, $top_left );
-			$top_right 		= call_user_method_array( 'getClosestColor', $this, $top_right );
-			$bottom_right 	= call_user_method_array( 'getClosestColor', $this, $bottom_right );
-			$bottom_left 	= call_user_method_array( 'getClosestColor', $this, $bottom_left );
+			$top_left 		= call_user_func_array( array( $this, 'getClosestColor' ), $top_left );
+			$top_right 		= call_user_func_array( array( $this, 'getClosestColor' ), $top_right );
+			$bottom_right	 	= call_user_func_array( array( $this, 'getClosestColor' ), $bottom_right );
+			$bottom_left 		= call_user_func_array( array( $this, 'getClosestColor' ), $bottom_left );
 		}
 
 		$colors = array( $top_left, $top_right, $bottom_left, $bottom_right);
