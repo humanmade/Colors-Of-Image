@@ -118,7 +118,7 @@ class ColorsOfImage {
 
 		$colors = array( $top_left, $top_right, $bottom_left, $bottom_right);
 
-		if( count( array_unique( $colors ) ) == 1 ) {
+		if( count( array_unique( $colors[0] ) ) == 1 ) {
 			return $this->RGBToHex( $top_left[0], $top_left[1], $top_left[2] );
 		}
 
