@@ -42,3 +42,7 @@ To control the amount colors returned set the third parameter.
 ```PHP
 $image = new ColorOfImage( $src, 5, 3 /* number of colors to return */ );
 ```
+
+## Contribution guidelines ##
+
+see https://github.com/humanmade/Colors-Of-Image/blob/master/CONTRIBUTING.md
