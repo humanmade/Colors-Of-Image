@@ -4,7 +4,7 @@ use Exception;
 
 /**
  * Gets the prominent colors in a given image. To get common color matching, all pixels are matched
- * against a whitelist color palette.
+ * against a white-listed color palette.
  *
  * @author  Joe Hoyle joe@hmn.md
  *
@@ -19,7 +19,7 @@ class ImagePalette {
     public $height;
     public $width;
     public $precision;
-    public $coinciditions; 
+    public $coinciditions;
     public $maxnumcolors;
     public $trueper;
     public $color_map = array();

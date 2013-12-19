@@ -1,0 +1,16 @@
+{
+    "name": "bfoxwell/ImagePalette",
+    "description": "Generate a color palette from an image.",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Brian Foxwell",
+            "email": "brian@foxwell.io"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src"
+        ]
+    }
+}
