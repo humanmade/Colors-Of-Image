@@ -21,7 +21,7 @@ class HelperAPI
      * @param $c2
      * @return float Difference between c1 and c2
      */
-    static function ciede2000($c1, $c2)
+    public function ciede2000($c1, $c2)
     {
         /**
          * Implemented as in "The CIEDE2000 Color-Difference Formula:
@@ -61,8 +61,8 @@ class HelperAPI
         $C2p = sqrt(pow($a2p, 2) + pow($b2, 2)); //(6)
 
 
-        $h1p = self::hp_f($b1, $a1p); //(7)
-        $h2p = self::hp_f($b2, $a2p); //(7)
+        $h1p = $this->hp_f($b1, $a1p); //(7)
+        $h2p = $this->hp_f($b2, $a2p); //(7)
 
         /**
          * Step 2: Calculate dLp, dCp, dHp
@@ -71,8 +71,8 @@ class HelperAPI
         $dCp = $C2p - $C1p; //(9)
 
 
-        $dhp = self::dhp_f($C1, $C2, $h1p, $h2p); //(10)
-        $dHp = 2 * sqrt($C1p * $C2p) * sin(self::radians($dhp) / 2.0); //(11)
+        $dhp = $this->dhp_f($C1, $C2, $h1p, $h2p); //(10)
+        $dHp = 2 * sqrt($C1p * $C2p) * sin($this->radians($dhp) / 2.0); //(11)
 
         /**
          * Step 3: Calculate CIEDE2000 Color-Difference
@@ -81,15 +81,15 @@ class HelperAPI
         $a_Cp = ($C1p + $C2p) / 2.0; //(13)
 
 
-        $a_hp = self::a_hp_f($C1, $C2, $h1p, $h2p); //(14)
+        $a_hp = $this->a_hp_f($C1, $C2, $h1p, $h2p); //(14)
 
-        $T = 1 - 0.17 * cos(self::radians($a_hp - 30)) + 0.24 * cos(self::radians(2 * $a_hp)) + 0.32 * cos(self::radians(3 * $a_hp + 6)) - 0.20 * cos(self::radians(4 * $a_hp - 63)); //(15)
+        $T = 1 - 0.17 * cos($this->radians($a_hp - 30)) + 0.24 * cos($this->radians(2 * $a_hp)) + 0.32 * cos($this->radians(3 * $a_hp + 6)) - 0.20 * cos($this->radians(4 * $a_hp - 63)); //(15)
         $d_ro = 30 * exp(-(pow(($a_hp - 275) / 25, 2))); //(16)
         $RC = sqrt((pow($a_Cp, 7.0)) / (pow($a_Cp, 7.0) + pow(25.0, 7.0))); //(17)
         $SL = 1 + ((0.015 * pow($a_L - 50, 2)) / sqrt(20 + pow($a_L - 50, 2.0))); //(18)
         $SC = 1 + 0.045 * $a_Cp; //(19)
         $SH = 1 + 0.015 * $a_Cp * $T; //(20)
-        $RT = -2 * $RC * sin(self::radians(2 * $d_ro)); //(21)
+        $RT = -2 * $RC * sin($this->radians(2 * $d_ro)); //(21)
         $dE = sqrt(pow($dLp / ($SL * $kL), 2) + pow($dCp / ($SC * $kC), 2) + pow($dHp / ($SH * $kH), 2) + $RT * ($dCp / ($SC * $kC)) * ($dHp / ($SH * $kH))); //(22)
         return $dE;
     }
@@ -103,7 +103,7 @@ class HelperAPI
     {
         if ($x == 0 && $y == 0) return 0;
         else {
-            $tmphp = self::degrees(atan2($x, $y));
+            $tmphp = $this->degrees(atan2($x, $y));
             if ($tmphp >= 0) return $tmphp;
             else           return $tmphp + 360;
         }
