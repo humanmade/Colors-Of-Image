@@ -1,7 +1,7 @@
 <?php
 use \bfoxwell\ImagePalette\ImagePalette;
 
-class palettePaletteTest extends PHPUnit_Framework_Testcase
+class ImagePaletteTest extends PHPUnit_Framework_Testcase
 {
     private $palette;
 
