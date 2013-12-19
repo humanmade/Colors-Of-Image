@@ -235,31 +235,7 @@ class ImagePalette {
         return $_c;
     }
 
-    /**
-     * Function used for testing, will return a map pof all colors to their matching color counter part
-     */
-    public function getColorMap() {
-
-        $image 		= $this->image;
-        $width 		= $this->width;
-        $height 	= $this->height;
-
-        for( $x = 0; $x < $width; $x += $this->precision ) {
-            for ( $y = 0; $y < $height; $y += $this->precision ) {
-
-                $index = imagecolorat($this->workingImage, $x, $y);
-                $rgb = imagecolorsforindex($this->workingImage, $index);
-
-                $color = $this->getClosestColor( $rgb["red"], $rgb["green"], $rgb["blue"] );
-
-                $hexarray[ $this->RGBToHex( $rgb["red"], $rgb["green"], $rgb["blue"] ) ] = $this->RGBToHex( $color[0], $color[1], $color[2] );
-            }
-        }
-
-        return $hexarray;
-    }
-
-    private function getClosestColor($r, $g, $b){
+    public function getClosestColor($r, $g, $b){
 
         if ( isset( $this->color_map[$this->RGBToHex( $r, $g, $b ) ] ) ) {
             return $this->color_map[$this->RGBToHex( $r, $g, $b )];

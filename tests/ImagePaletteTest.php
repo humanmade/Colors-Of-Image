@@ -1,27 +1,50 @@
 <?php
 use \bfoxwell\ImagePalette\ImagePalette;
 
-class ImagePaletteTest extends PHPUnit_Framework_Testcase
+class palettePaletteTest extends PHPUnit_Framework_Testcase
 {
-    private $image;
+    private $palette;
 
     public function setUp() {
-        $this->image = new ImagePalette('https://www.google.com/images/srpr/logo11w.png', 5);
+        $this->palette = new ImagePalette('https://www.google.com/images/srpr/logo11w.png', 5);
     }
 
     public function tearDown() {
-        $this->image = null;
+        $this->palette = null;
     }
 
     public function testIntegrationImagePaletteIsObject()
     {
-        var_dump($this->image);
-        return $this->assertTrue(is_object($this->image));
+        return $this->assertTrue(is_object($this->palette));
     }
 
     public function testIntegrationProminentColorsIsArray()
     {
-        var_dump($this->image->getProminentColors());
-        return $this->assertTrue(is_array($this->image->getProminentColors()));
+        return $this->assertTrue(is_array($this->palette->getProminentColors()));
+    }
+
+    /**
+     * Return an array map of all colors to their matching color counter part.
+     * @return mixed
+     */
+    public function testColorMapContainsWhite()
+    {
+        $width = $this->palette->width;
+        $height= $this->palette->height;
+        $hexArray = array();
+
+        for( $x = 0; $x < $width; $x += $this->palette->precision ) {
+            for ( $y = 0; $y < $height; $y += $this->palette->precision ) {
+
+                $index = imagecolorat($this->palette->workingImage, $x, $y);
+                $rgb = imagecolorsforindex($this->palette->workingImage, $index);
+
+                $color = $this->palette->getClosestColor( $rgb["red"], $rgb["green"], $rgb["blue"] );
+
+                $hexArray[ $this->palette->RGBToHex( $rgb["red"], $rgb["green"], $rgb["blue"] ) ] = $this->palette->RGBToHex( $color[0], $color[1], $color[2] );
+            }
+        }
+
+        return $this->assertContains('#FFFFFF', $hexArray);
     }
 } 
