@@ -4,7 +4,7 @@ Warning not tested yet.
 ImagePalette
 ===============
 
-Color of Image is used to extract a color palette from a given image. Aside from being a native PHP implementation, Color of Image differs from many palette extractors as it works off a white list color palette. Below is the default palette:
+ImagePalette is used to extract a color palette from a given image. Aside from being a native PHP implementation, ImagePalette differs from many palette extractors as it works off a white list color palette. Below is the default palette:
 
 ![](https://dl.dropbox.com/u/238502/Captured/RUf54.png)
 
