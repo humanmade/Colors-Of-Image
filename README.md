@@ -48,4 +48,4 @@ $image = new ImagePalette( $src, 5, 3 /* number of colors to return */ );
 
 ## Contribution guidelines ##
 
-see https://github.com/brianfoxwell/ImagePalette/blob/master/CONTRIBUTING.md
+See: https://github.com/brianfoxwell/ImagePalette/blob/master/CONTRIBUTING.md
