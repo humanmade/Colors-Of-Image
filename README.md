@@ -1,4 +1,4 @@
-Warning not tested yet.
+[![Build Status](https://travis-ci.org/brianfoxwell/ImagePalette.png)](https://travis-ci.org/brianfoxwell/ImagePalette)
 
 
 ImagePalette
