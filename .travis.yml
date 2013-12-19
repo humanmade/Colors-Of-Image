@@ -7,4 +7,4 @@ php:
 
 before_script:
     - composer self-update
-    - composer update
+    - composer update --no-dev
