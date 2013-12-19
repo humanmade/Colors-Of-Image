@@ -19,6 +19,7 @@ class ImagePaletteTest extends PHPUnit_Framework_Testcase
 
     public function testIntegrationProminentColorsIsArray()
     {
+        var_dump($this->image->getProminentColors());
         return $this->assertTrue(is_array($this->image->getProminentColors()));
     }
 } 
