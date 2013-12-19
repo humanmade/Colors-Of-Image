@@ -15,7 +15,6 @@ use Exception;
  */
 class ImagePalette {
 
-    public static $helper;
     public $image;
     public $height;
     public $width;
@@ -32,7 +31,6 @@ class ImagePalette {
     static $missed_pixels = 0;
 
     public function __construct( $image, $precision = 10, $maxnumcolors = 5, $trueper = true ) {
-        self::$helper = new HelperAPI;
         $this->image = $image;
         $this->maxnumcolors = $maxnumcolors;
         $this->trueper = $trueper;
@@ -42,6 +40,11 @@ class ImagePalette {
         $this->readPixels();
 
         $this->_excluded_colors[] = $this->getBackgroundColor();
+    }
+
+    public static function helper()
+    {
+        return new HelperAPI;
     }
 
     public function setMinPercentage( $num ) {
@@ -287,7 +290,7 @@ class ImagePalette {
         $lab1 = self::xyz_to_lab( $xyz1 );
         $lab2 = self::xyz_to_lab( $xyz2 );
 
-        return self::$helper->ciede2000( $lab1, $lab2 );
+        return self::helper()->ciede2000( $lab1, $lab2 );
     }
 
     private function getPalette() {
