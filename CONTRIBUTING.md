@@ -2,8 +2,8 @@
 
 ## Workflow ##
 * Assign the pull request to one of the following contacts:
-	* Primary: Joe Hoyle [@joehoyle](https://github.com/joehoyle)
+	* Primary: Brian Foxwell [@brianfoxwell](https://github.com/brianfoxwell)
 
 ## Coding Standards ##
-Please follow these recommendations
-[http://codex.wordpress.org/WordPress_Coding_Standards](http://codex.wordpress.org/WordPress_Coding_Standards)
+[https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md)
+[https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
