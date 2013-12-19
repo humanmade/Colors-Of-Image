@@ -6,5 +6,5 @@ php:
     - 5.5
 
 before_script:
-    - composer self-update
+    - if composer >/dev/null 2>&1; then composer self-update; else curl -s http://getcomposer.org/installer | php && php composer.phar install --dev; fi
     - composer update --no-dev
