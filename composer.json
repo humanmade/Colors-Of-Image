@@ -9,10 +9,11 @@
         }
     ],
     "autoload": {
-        "classmap": [
-            "src"
-        ]
+        "psr-0": {
+            "bfoxwell\\ImagePalette": "src/"
+        }
     },
+
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
     }
