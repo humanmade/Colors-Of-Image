@@ -5,7 +5,7 @@ class ImagePaletteTest extends PHPUnit_Framework_Testcase
     private $image;
 
     public function setUp() {
-        $this->image = new \bfoxwell\ImagePalette\ImagePalette('http://wallpapers.wallbase.cc/high-resolution/wallpaper-3033045.jpg');
+        $this->image = new \bfoxwell\ImagePalette\ImagePalette('https://www.google.com/images/srpr/logo11w.png');
     }
 
     public function tearDown() {
