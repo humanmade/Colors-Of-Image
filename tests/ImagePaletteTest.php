@@ -1,11 +1,12 @@
 <?php
+use \bfoxwell\ImagePalette\ImagePalette;
 
 class ImagePaletteTest extends PHPUnit_Framework_Testcase
 {
     private $image;
 
     public function setUp() {
-        $this->image = new \bfoxwell\ImagePalette\ImagePalette('https://www.google.com/images/srpr/logo11w.png');
+        $this->image = new ImagePalette('https://www.google.com/images/srpr/logo11w.png');
     }
 
     public function tearDown() {
