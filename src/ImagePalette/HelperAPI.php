@@ -1,5 +1,5 @@
 <?php
-namespace bfoxwell\ColorsOfImage;
+namespace bfoxwell\ImagePalette;
 use Exception;
 /**
  * @author Markus Näsman, Refactored by Brian Foxwell
