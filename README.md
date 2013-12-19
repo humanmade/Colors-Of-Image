@@ -1,11 +1,14 @@
-Colors-Of-Image
+Warning not tested yet.
+
+
+ImagePalette
 ===============
 
-Color of Image is used to extract a color palette from a given image. Aside from being a native PHP implementation, Color of Image differes from many palette extracters as it works off a white list color palette. Below is the default palette:
+Color of Image is used to extract a color palette from a given image. Aside from being a native PHP implementation, Color of Image differs from many palette extractors as it works off a white list color palette. Below is the default palette:
 
 ![](https://dl.dropbox.com/u/238502/Captured/RUf54.png)
 
-The main advanage of working from a color palette is closer matching, as each pixel simply has to calculate the color-distance within the palatte and chose the best match. This is useful for working with color taxonomies as the taxonomy should have a finate amount of colors. 
+The main advanage of working from a color palette is closer matching, as each pixel simply has to calculate the color-distance within the palette and chose the best match. This is useful for working with color taxonomies as the taxonomy should have a finite amount of colors.
 
 ![](https://dl.dropbox.com/u/238502/Captured/HphVw.png)
 
@@ -16,23 +19,23 @@ __________
 
 ```PHP
 // initiate with image
-$image = new ColorOfImage( 'https://www.google.co.uk/images/srpr/logo3w.png' );
+$image = new ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
 $colors = $image->getProminentColors(); // array( '#FFFDD', ... )
 ```
 
-And there we go! 
+And there we go!
 
 Options
 __________
 
 **Precision**
 
-By default, `ColorOfImage` will process every 10th pixel. This is for performance reasons, you can change this like below. The precision is a performance-to-time desicion.
+By default, `ImagePalette` will process every 10th pixel. This is for performance reasons, you can change this like below. The precision is a performance-to-time decision.
 
 ```PHP
-$image = new ColorOfImage( $src, 5 /* precision */ );
+$image = new ImagePalette( $src, 5 /* precision */ );
 ```
 
 **Color Count**
@@ -40,9 +43,9 @@ $image = new ColorOfImage( $src, 5 /* precision */ );
 To control the amount colors returned set the third parameter.
 
 ```PHP
-$image = new ColorOfImage( $src, 5, 3 /* number of colors to return */ );
+$image = new ImagePalette( $src, 5, 3 /* number of colors to return */ );
 ```
 
 ## Contribution guidelines ##
 
-see https://github.com/humanmade/Colors-Of-Image/blob/master/CONTRIBUTING.md
+see https://github.com/bfoxwell/ImagePalette/blob/master/CONTRIBUTING.md
