@@ -4,6 +4,7 @@ php:
     - 5.3
     - 5.4
     - 5.5
+    - hhvm
 
 before_script:
     - if composer >/dev/null 2>&1; then composer self-update && composer update --no-dev; else curl -s http://getcomposer.org/installer | php && php composer.phar install --dev; fi
