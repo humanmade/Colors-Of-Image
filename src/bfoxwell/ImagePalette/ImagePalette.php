@@ -38,7 +38,7 @@ class ImagePalette
 
     public function __construct($image, $precision = 10, $maxnumcolors = 5, $trueper = true)
     {
-        $this->helper = new HelperAPI();
+        $this->helper = new ColorDifference();
         $this->image = $image;
         $this->maxnumcolors = $maxnumcolors;
         $this->trueper = $trueper;

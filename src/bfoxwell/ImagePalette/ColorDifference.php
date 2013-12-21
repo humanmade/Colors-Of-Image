@@ -16,26 +16,32 @@ use Exception;
  * Class HelperAPI
  * @package bfoxwell\ImagePalette
  */
-class HelperAPI
+class ColorDifference
 {
     /**
      * Returns the difference between c1 and c2 using the CIEDE2000 Color-Difference Algorithm
      *
-     * @param $c1
-     * @param $c2
-     * @return float Difference between c1 and c2
+     * @param $lab1
+     * @param $lab2
+     * @return float Difference between lab1 and lab2
      */
-    public function ciede2000($c1, $c2)
+    public function ciede2000($lab1, $lab2)
     {
+        /**
+         * Implemented as in "The CIEDE2000 Color-Difference Formula:
+         * Implementation Notes, Supplementary Test Data, and Mathematical Observations"
+         * by Gaurav Sharma, Wencheng Wu and Edul N. Dalal.
+         */
+
         // Get L,a,b values for color 1
-        $L1 = $c1['l'];
-        $a1 = $c1['a'];
-        $b1 = $c1['b'];
+        $L1 = $lab1['l'];
+        $a1 = $lab1['a'];
+        $b1 = $lab1['b'];
 
         // Get L,a,b values for color 2
-        $L2 = $c2['l'];
-        $a2 = $c2['a'];
-        $b2 = $c2['b'];
+        $L2 = $lab2['l'];
+        $a2 = $lab2['a'];
+        $b2 = $lab2['b'];
 
         // Weight factors
         $kL = 1;
