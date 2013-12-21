@@ -36,8 +36,7 @@ $colors = $image->getProminentColors(); // array( '#FFFDD', ... )
 
 And there we go!
 
-Options
-__________
+## Options
 
 **Precision**
 
