@@ -1,6 +1,6 @@
 <?php
 
-namespace bfoxwell\ImagePalette;
+namespace bfoxwell\ImagePalette\Exception;
 
 /**
  * ImagePalette Specific Exception

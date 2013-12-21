@@ -13,6 +13,9 @@
 
 namespace bfoxwell\ImagePalette;
 
+use bfoxwell\ImagePalette\Filter\ColorDifference;
+use bfoxwell\ImagePalette\Exception\UnsupportedFileTypeException;
+
 /**
  * Class ImagePalette
  *
