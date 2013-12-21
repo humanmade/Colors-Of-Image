@@ -1,19 +1,25 @@
 <?php
+/**
+ * This file is part of the ImagePalette package.
+ *
+ * (c) Joe Hoyle <joe@hmn.md>
+ * (c) Brian Foxwell <brian@foxwell.io>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace bfoxwell\ImagePalette;
 use Exception;
+
 /**
- * @author Markus Näsman, Refactored by Brian Foxwell
- * @copyright 2012 (c) Markus Näsman <markus at botten dot org >
- * @license see COPYING
+ * Class HelperAPI
+ * @package bfoxwell\ImagePalette
  */
 class HelperAPI
 {
     /**
-     * Implemented as in "The CIEDE2000 Color-Difference Formula:
-     * Implementation Notes, Supplementary Test Data, and Mathematical Observations"
-     * by Gaurav Sharma, Wencheng Wu and Edul N. Dalal.
-     *
-     * Returns diff between c1 and c2 using the CIEDE2000 algorithm
+     * Returns the difference between c1 and c2 using the CIEDE2000 Color-Difference Algorithm
      *
      * @param $c1
      * @param $c2
@@ -21,12 +27,6 @@ class HelperAPI
      */
     public function ciede2000($c1, $c2)
     {
-        /**
-         * Implemented as in "The CIEDE2000 Color-Difference Formula:
-         * Implementation Notes, Supplementary Test Data, and Mathematical Observations"
-         * by Gaurav Sharma, Wencheng Wu and Edul N. Dalal.
-         */
-
         // Get L,a,b values for color 1
         $L1 = $c1['l'];
         $a1 = $c1['a'];
@@ -70,7 +70,7 @@ class HelperAPI
 
 
         $dhp = $this->dhp_f($C1, $C2, $h1p, $h2p); //(10)
-        $dHp = 2 * sqrt($C1p * $C2p) * sin($this->radians($dhp) / 2.0); //(11)
+        $dHp = 2 * sqrt($C1p * $C2p) * sin(deg2rad($dhp) / 2.0); //(11)
 
         /**
          * Step 3: Calculate CIEDE2000 Color-Difference
@@ -81,13 +81,13 @@ class HelperAPI
 
         $a_hp = $this->a_hp_f($C1, $C2, $h1p, $h2p); //(14)
 
-        $T = 1 - 0.17 * cos($this->radians($a_hp - 30)) + 0.24 * cos($this->radians(2 * $a_hp)) + 0.32 * cos($this->radians(3 * $a_hp + 6)) - 0.20 * cos($this->radians(4 * $a_hp - 63)); //(15)
+        $T = 1 - 0.17 * cos(deg2rad($a_hp - 30)) + 0.24 * cos(deg2rad(2 * $a_hp)) + 0.32 * cos(deg2rad(3 * $a_hp + 6)) - 0.20 * cos(deg2rad(4 * $a_hp - 63)); //(15)
         $d_ro = 30 * exp(-(pow(($a_hp - 275) / 25, 2))); //(16)
         $RC = sqrt((pow($a_Cp, 7.0)) / (pow($a_Cp, 7.0) + pow(25.0, 7.0))); //(17)
         $SL = 1 + ((0.015 * pow($a_L - 50, 2)) / sqrt(20 + pow($a_L - 50, 2.0))); //(18)
         $SC = 1 + 0.045 * $a_Cp; //(19)
         $SH = 1 + 0.015 * $a_Cp * $T; //(20)
-        $RT = -2 * $RC * sin($this->radians(2 * $d_ro)); //(21)
+        $RT = -2 * $RC * sin(deg2rad(2 * $d_ro)); //(21)
         $dE = sqrt(pow($dLp / ($SL * $kL), 2) + pow($dCp / ($SC * $kC), 2) + pow($dHp / ($SH * $kH), 2) + $RT * ($dCp / ($SC * $kC)) * ($dHp / ($SH * $kH))); //(22)
         return $dE;
     }
@@ -101,7 +101,7 @@ class HelperAPI
     {
         if ($x == 0 && $y == 0) return 0;
         else {
-            $tmphp = $this->degrees(atan2($x, $y));
+            $tmphp = deg2rad(atan2($x, $y));
             if ($tmphp >= 0) return $tmphp;
             else           return $tmphp + 360;
         }
@@ -139,23 +139,5 @@ class HelperAPI
         else if ((abs($h1p - $h2p) > 180) && (($h1p + $h2p) < 360)) return ($h1p + $h2p + 360) / 2.0;
         else if ((abs($h1p - $h2p) > 180) && (($h1p + $h2p) >= 360)) return ($h1p + $h2p - 360) / 2.0;
         else throw new Exception('d');
-    }
-
-    /**
-     * @param $n
-     * @return mixed
-     */
-    public function degrees($n)
-    {
-        return $n * (180 / pi());
-    }
-
-    /**
-     * @param $n
-     * @return mixed
-     */
-    public function radians($n)
-    {
-        return $n * (pi() / 180);
     }
 }

@@ -1,18 +1,24 @@
 <?php
-namespace bfoxwell\ImagePalette;
-
-use Exception;
 
 /**
+ * This file is part of the ImagePalette package.
+ *
+ * (c) Joe Hoyle <joe@hmn.md>
+ * (c) Brian Foxwell <brian@foxwell.io>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace bfoxwell\ImagePalette;
+
+/**
+ * Class ImagePalette
+ *
  * Gets the prominent colors in a given image. To get common color matching, all pixels are matched
  * against a white-listed color palette.
  *
- * @author  Joe Hoyle joe@hmn.md
- *
- * Props to the following people who I ripped some of this code from:
- *
- * Marc Pacheco
- *
+ * @package bfoxwell\ImagePalette
  */
 class ImagePalette
 {
