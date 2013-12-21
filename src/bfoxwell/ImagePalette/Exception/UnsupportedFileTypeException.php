@@ -17,6 +17,6 @@ namespace bfoxwell\ImagePalette;
  * Class UnsupportedFileTypeException
  * @package bfoxwell\ImagePalette
  */
-class UnsupportedFileTypeException extends \Exception {
+class UnsupportedFileTypeException extends \Exception implements Exception {
 
 } 
