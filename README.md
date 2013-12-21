@@ -6,13 +6,13 @@ ImagePalette
 
 ImagePalette is used to extract a color palette from a given image. Aside from being a native PHP implementation, ImagePalette differs from many palette extractors as it works off a white list color palette. Below is the default palette:
 
-![](https://dl.dropbox.com/u/238502/Captured/RUf54.png)
+![](http://i.imgur.com/Rabqkqq.png)
 
 The main advantage of working from a color palette is closer matching, as each pixel simply has to calculate the color-distance within the palette and chose the best match. This is useful for working with color taxonomies as the taxonomy should have a finite amount of colors.
 
-![](https://dl.dropbox.com/u/238502/Captured/HphVw.png)
+![](http://i.imgur.com/O8fsFWz.png)
 
-See an example of this in action here: http://www.rufflr.com/search/?color=ffcc33
+See an example of this in action here: http://wallbase.cc/wallpaper/377921
 
 ## Installation
 
