@@ -73,12 +73,12 @@ class ImagePalette
                     $outputImg = "imagecreatefrombmp";
                     break;
                 default:
-                    throw new FileTypeNotSupportedException("The file type .$typeOfImage is not supported.");
+                    throw new UnsupportedFileTypeException("The file type .$typeOfImage is not supported.");
             }
 
             $this->workingImage = $outputImg($image);
 
-        } catch (FileTypeNotSupportedException $e) {
+        } catch (UnsupportedFileTypeException $e) {
             echo $e->getMessage() . "\n";
             exit();
         }
