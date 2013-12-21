@@ -57,3 +57,7 @@ $image = new \bfoxwell\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors
 ## Contribution guidelines ##
 
 See: https://github.com/brianfoxwell/ImagePalette/blob/master/CONTRIBUTING.md
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/brianfoxwell/imagepalette/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
