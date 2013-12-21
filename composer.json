@@ -19,7 +19,9 @@
             "role": "Original Author"
         },
         {
-            "name": "Marc Pacheco"
+            "name": "Marc Pacheco",
+            "email": "Marckk1997@gmail.com",
+            "homepage": "http://marcpacheco.me"
         }
     ],
     "require": {
