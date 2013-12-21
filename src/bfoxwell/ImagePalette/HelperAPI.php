@@ -8,8 +8,6 @@ use Exception;
  */
 class HelperAPI
 {
-
-
     /**
      * Implemented as in "The CIEDE2000 Color-Difference Formula:
      * Implementation Notes, Supplementary Test Data, and Mathematical Observations"
@@ -117,7 +115,7 @@ class HelperAPI
      * @return int
      * @throws Exception
      */
-    function dhp_f($C1, $C2, $h1p, $h2p) //(10)
+    public function  dhp_f($C1, $C2, $h1p, $h2p) //(10)
     {
         if ($C1 * $C2 == 0) return 0;
         else if (abs($h2p - $h1p) <= 180) return $h2p - $h1p;
@@ -134,7 +132,7 @@ class HelperAPI
      * @return float
      * @throws Exception
      */
-    function a_hp_f($C1, $C2, $h1p, $h2p)
+    public function  a_hp_f($C1, $C2, $h1p, $h2p)
     { //(14)
         if ($C1 * $C2 == 0) return $h1p + $h2p;
         else if (abs($h1p - $h2p) <= 180) return ($h1p + $h2p) / 2.0;
