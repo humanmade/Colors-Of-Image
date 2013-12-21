@@ -1,6 +1,5 @@
 # ImagePalette
 [![Build Status](https://travis-ci.org/brianfoxwell/ImagePalette.png)](https://travis-ci.org/brianfoxwell/ImagePalette)
-[![Coverage Status](https://coveralls.io/repos/brianfoxwell/ImagePalette/badge.png)](https://coveralls.io/r/brianfoxwell/ImagePalette)
 
 ImagePalette is used to extract a color palette from a given image. Aside from being a native PHP implementation, ImagePalette differs from many palette extractors as it works off a white list color palette. Below is the default palette:
 
