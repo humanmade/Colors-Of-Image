@@ -1,11 +1,25 @@
 {
     "name": "bfoxwell/image-palette",
     "description": "Generate a color palette from an image.",
+    "keywords": ["image","color","palette","gd"],
+    "homepage": "https://github.com/brianfoxwell/ImagePalette",
+    "license": "MIT",
     "minimum-stability": "stable",
     "authors": [
         {
             "name": "Brian Foxwell",
-            "email": "brian@foxwell.io"
+            "email": "brian@foxwell.io",
+            "homepage": "http://foxwell.io",
+            "role": "Developer"
+        },
+        {
+            "name": "Joe Hoyle",
+            "email": "joe@hmn.md",
+            "homepage": "https://github.com/joehoyle",
+            "role": "Original Author"
+        },
+        {
+            "name": "Marc Pacheco"
         }
     ],
     "require": {

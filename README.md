@@ -14,8 +14,17 @@ The main advantage of working from a color palette is closer matching, as each p
 
 See an example of this in action here: http://www.rufflr.com/search/?color=ffcc33
 
-Usage
-__________
+## Installation
+
+Simply add the following to your ```composer.json``` file:
+
+```JSON
+"require": {
+    "bfoxwell/image-palette": "dev-master"
+}
+```
+
+## Usage
 
 ```PHP
 // initiate with image
