@@ -97,7 +97,7 @@ class HelperAPI
      * @param $y
      * @return int|mixed
      */
-    function hp_f($x, $y) //(7)
+    protected function  hp_f($x, $y) //(7)
     {
         if ($x == 0 && $y == 0) return 0;
         else {
@@ -115,7 +115,7 @@ class HelperAPI
      * @return int
      * @throws Exception
      */
-    public function  dhp_f($C1, $C2, $h1p, $h2p) //(10)
+    protected function  dhp_f($C1, $C2, $h1p, $h2p) //(10)
     {
         if ($C1 * $C2 == 0) return 0;
         else if (abs($h2p - $h1p) <= 180) return $h2p - $h1p;
@@ -132,7 +132,7 @@ class HelperAPI
      * @return float
      * @throws Exception
      */
-    public function  a_hp_f($C1, $C2, $h1p, $h2p)
+    protected function  a_hp_f($C1, $C2, $h1p, $h2p)
     { //(14)
         if ($C1 * $C2 == 0) return $h1p + $h2p;
         else if (abs($h1p - $h2p) <= 180) return ($h1p + $h2p) / 2.0;
