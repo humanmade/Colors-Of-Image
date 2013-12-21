@@ -8,7 +8,7 @@ ImagePalette is used to extract a color palette from a given image. Aside from b
 
 ![](https://dl.dropbox.com/u/238502/Captured/RUf54.png)
 
-The main advanage of working from a color palette is closer matching, as each pixel simply has to calculate the color-distance within the palette and chose the best match. This is useful for working with color taxonomies as the taxonomy should have a finite amount of colors.
+The main advantage of working from a color palette is closer matching, as each pixel simply has to calculate the color-distance within the palette and chose the best match. This is useful for working with color taxonomies as the taxonomy should have a finite amount of colors.
 
 ![](https://dl.dropbox.com/u/238502/Captured/HphVw.png)
 
@@ -35,7 +35,7 @@ __________
 By default, `ImagePalette` will process every 10th pixel. This is for performance reasons, you can change this like below. The precision is a performance-to-time decision.
 
 ```PHP
-$image = new ImagePalette( $src, 5 /* precision */ );
+$image = new \bfoxwell\ImagePalette\ImagePalette( $src, 5 /* precision */ );
 ```
 
 **Color Count**
@@ -43,7 +43,7 @@ $image = new ImagePalette( $src, 5 /* precision */ );
 To control the amount colors returned set the third parameter.
 
 ```PHP
-$image = new ImagePalette( $src, 5, 3 /* number of colors to return */ );
+$image = new \bfoxwell\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors to return */ );
 ```
 
 ## Contribution guidelines ##
