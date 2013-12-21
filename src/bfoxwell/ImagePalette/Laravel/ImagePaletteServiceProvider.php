@@ -30,7 +30,7 @@ class ImagePaletteServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app['bfoxwell/image-palette'] = $this->app->share(
+        $this->app['image-palette'] = $this->app->share(
             function ($app) {
                 return new Client;
             }
@@ -44,7 +44,7 @@ class ImagePaletteServiceProvider extends ServiceProvider {
      */
     public function provides()
     {
-        return array('bfoxwell/image-palette');
+        return array('image-palette');
     }
 
 } 
