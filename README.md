@@ -1,8 +1,6 @@
+# ImagePalette
 [![Build Status](https://travis-ci.org/brianfoxwell/ImagePalette.png)](https://travis-ci.org/brianfoxwell/ImagePalette)
-
-
-ImagePalette
-===============
+[![Coverage Status](https://coveralls.io/repos/brianfoxwell/ImagePalette/badge.png)](https://coveralls.io/r/brianfoxwell/ImagePalette)
 
 ImagePalette is used to extract a color palette from a given image. Aside from being a native PHP implementation, ImagePalette differs from many palette extractors as it works off a white list color palette. Below is the default palette:
 
@@ -36,9 +34,9 @@ $colors = $image->getProminentColors(); // array( '#FFFDD', ... )
 
 And there we go!
 
-## Options
+### Options
 
-**Precision**
+#### Precision
 
 By default, `ImagePalette` will process every 10th pixel. This is for performance reasons, you can change this like below. The precision is a performance-to-time decision.
 
@@ -46,7 +44,7 @@ By default, `ImagePalette` will process every 10th pixel. This is for performanc
 $image = new \bfoxwell\ImagePalette\ImagePalette( $src, 5 /* precision */ );
 ```
 
-**Color Count**
+#### Color Count
 
 To control the amount colors returned set the third parameter.
 
