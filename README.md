@@ -19,7 +19,7 @@ __________
 
 ```PHP
 // initiate with image
-$image = new ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
+$image = new \bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
 $colors = $image->getProminentColors(); // array( '#FFFDD', ... )
