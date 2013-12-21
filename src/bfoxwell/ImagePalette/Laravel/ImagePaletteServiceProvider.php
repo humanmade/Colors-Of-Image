@@ -5,7 +5,7 @@ use Illuminate\Support\ServiceProvider;
 
 use bfoxwell\ImagePalette\Client;
 
-class ImagePaletteServiceProvider {
+class ImagePaletteServiceProvider extends ServiceProvider {
     /**
      * Indicates if loading of the provider is deferred.
      *
