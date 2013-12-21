@@ -1,7 +1,7 @@
 {
     "name": "bfoxwell/image-palette",
     "description": "Generate a color palette from an image.",
-    "keywords": ["image","color","palette","gd"],
+    "keywords": ["image","color","palette","gd","extractor"],
     "homepage": "https://github.com/brianfoxwell/ImagePalette",
     "license": "MIT",
     "minimum-stability": "stable",
@@ -23,7 +23,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "ext-gd": "*"
     },
     "autoload": {
         "psr-0": {
