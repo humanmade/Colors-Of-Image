@@ -1,5 +1,5 @@
 {
-    "name": "bfoxwell/ImagePalette",
+    "name": "bfoxwell/image-palette",
     "description": "Generate a color palette from an image.",
     "minimum-stability": "stable",
     "authors": [
