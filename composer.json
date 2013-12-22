@@ -12,17 +12,6 @@
             "email": "brian@foxwell.io",
             "homepage": "http://foxwell.io",
             "role": "Developer"
-        },
-        {
-            "name": "Joe Hoyle",
-            "email": "joe@hmn.md",
-            "homepage": "https://github.com/joehoyle",
-            "role": "Original Author"
-        },
-        {
-            "name": "Marc Pacheco",
-            "email": "Marckk1997@gmail.com",
-            "homepage": "http://marcpacheco.me"
         }
     ],
     "require": {
