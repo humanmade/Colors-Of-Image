@@ -1,7 +1,7 @@
 {
     "name": "bfoxwell/image-palette",
     "type": "library",
-    "description": "Generate a color palette from an image.",
+    "description": "Extracts colors from an image and generates a color palette against a whitelist of colors.",
     "keywords": ["image","color","palette","extractor","gd","laravel"],
     "homepage": "https://github.com/brianfoxwell/ImagePalette",
     "license": "MIT",
