@@ -13,6 +13,9 @@ The main advantage of working from a color palette is closer matching, as each p
 
 See an example of this in action here: http://wallbase.cc/wallpaper/377921
 
+## Requirements
+```PHP >= 5.3``` ```php5-gd```
+
 ## Installation
 
 Simply add the following to your ```composer.json``` file:
