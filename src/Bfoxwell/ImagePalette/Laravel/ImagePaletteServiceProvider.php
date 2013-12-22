@@ -1,9 +1,9 @@
 <?php
-namespace bfoxwell\ImagePalette\Laravel;
+namespace Bfoxwell\ImagePalette\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 
-use bfoxwell\ImagePalette\Client;
+use Bfoxwell\ImagePalette\Client;
 
 class ImagePaletteServiceProvider extends ServiceProvider {
     /**

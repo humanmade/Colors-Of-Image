@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-use \bfoxwell\ImagePalette\ImagePalette;
+use \Bfoxwell\ImagePalette\ImagePalette;
 
 /**
  * Class ImagePaletteTest

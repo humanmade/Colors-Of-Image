@@ -35,6 +35,34 @@ $colors = $image->getProminentColors(); // array( '#FFFDD', ... )
 
 And there we go!
 
+### Laravel 4
+
+Find the `providers` key in `app/config/app.php` and register the `ImagePaletteServiceProvider`:
+
+```php
+'providers' => array(
+    // ...
+    'Bfoxwell\ImagePalette\Laravel\ImagePaletteServiceProvider',
+)
+```
+
+Then, find the `aliases` key in `app/config/app.php` and register the `ImagePaletteFacade`:
+
+```php
+'aliases' => array(
+    // ...
+    'ImagePalette' => 'Bfoxwell\ImagePalette\Laravel\ImagePaletteFacade',
+)
+```
+
+Example:
+
+```php
+$fileOrUrl = 'https://www.google.com/images/srpr/logo11w.png';
+ImagePalette::getColors($fileOrUrl);
+'''
+```
+
 ### Options
 
 #### Precision

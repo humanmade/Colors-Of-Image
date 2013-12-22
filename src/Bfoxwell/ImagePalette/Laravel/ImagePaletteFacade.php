@@ -1,5 +1,5 @@
 <?php
-namespace bfoxwell\ImagePalette\Laravel;
+namespace Bfoxwell\ImagePalette\Laravel;
 
 use Illuminate\Support\Facades\Facade;
 

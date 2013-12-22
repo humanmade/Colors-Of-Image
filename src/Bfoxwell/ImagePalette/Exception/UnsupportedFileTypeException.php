@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace bfoxwell\ImagePalette\Exception;
+namespace Bfoxwell\ImagePalette\Exception;
 
 /**
  * Class UnsupportedFileTypeException

@@ -11,10 +11,10 @@
  * file that was distributed with this source code.
  */
 
-namespace bfoxwell\ImagePalette;
+namespace Bfoxwell\ImagePalette;
 
-use bfoxwell\ImagePalette\Filter\ColorDifference;
-use bfoxwell\ImagePalette\Exception\UnsupportedFileTypeException;
+use Bfoxwell\ImagePalette\Filter\ColorDifference;
+use Bfoxwell\ImagePalette\Exception\UnsupportedFileTypeException;
 
 /**
  * Class ImagePalette

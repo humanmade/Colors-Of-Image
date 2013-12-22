@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-use bfoxwell\ImagePalette\Client;
+use Bfoxwell\ImagePalette\Client;
 
 /**
  * Class LaravelTest

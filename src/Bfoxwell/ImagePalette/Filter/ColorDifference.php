@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace bfoxwell\ImagePalette\Filter;
+namespace Bfoxwell\ImagePalette\Filter;
 use Exception;
 
 /**
