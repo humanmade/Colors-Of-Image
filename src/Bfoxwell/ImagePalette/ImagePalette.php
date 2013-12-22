@@ -23,6 +23,7 @@ use Bfoxwell\ImagePalette\Exception\UnsupportedFileTypeException;
  * against a white-listed color palette.
  *
  * @package bfoxwell\ImagePalette
+ * @todo Fix the algorithm to return more accurate color match.
  */
 class ImagePalette
 {
