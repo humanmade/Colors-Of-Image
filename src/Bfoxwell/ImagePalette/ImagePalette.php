@@ -270,7 +270,7 @@ class ImagePalette
      * Get colors
      * @return array
      */
-    public function getProminentColors()
+    public function getColors()
     {
         // Count each color occurrence.
         $countEachColor = array_count_values($this->loadedImageColors);

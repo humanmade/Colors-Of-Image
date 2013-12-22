@@ -33,7 +33,7 @@ Simply add the following to your ```composer.json``` file:
 $image = new \Bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
-$colors = $image->getProminentColors(); // array( '#FFFDD', ... )
+$colors = $image->getColors(); // array( '#FFFDD', ... )
 ```
 
 And there we go!
