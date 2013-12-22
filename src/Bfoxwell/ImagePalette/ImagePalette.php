@@ -13,7 +13,6 @@
 
 namespace Bfoxwell\ImagePalette;
 
-use Bfoxwell\ImagePalette\Filter\ColorDifference;
 use Bfoxwell\ImagePalette\Exception\UnsupportedFileTypeException;
 
 /**
@@ -23,185 +22,100 @@ use Bfoxwell\ImagePalette\Exception\UnsupportedFileTypeException;
  * against a white-listed color palette.
  *
  * @package bfoxwell\ImagePalette
- * @todo Fix the algorithm to return more accurate color match.
  */
 class ImagePalette
 {
-    public $height;
+    /**
+     * File or Url
+     * @var string
+     */
+    public $file;
+
+    /**
+     * Loaded Image
+     * @var object
+     */
+    public $loadedImage;
+
+    /**
+     * Loaded Image Colors in Hex
+     * @var array
+     */
+    public $loadedImageColors = array();
+
+    /**
+     * Width of image
+     * @var integer
+     */
     public $width;
-    public $precision;
-    public $workingImage;
-    protected $helper;
-    protected $image;
-    protected $coinciditions;
-    protected $maxnumcolors;
-    protected $trueper;
-    protected $color_map = array();
-    protected $_palette = array();
-    protected $_min_percentage = 10;
-    protected $_excluded_colors = array('#FFFFFF');
 
-    public function __construct($image, $precision = 10, $maxnumcolors = 5, $trueper = true)
+    /**
+     * Height of image
+     * @var integer
+     */
+    public $height;
+
+    /**
+     * Number of colors to return
+     * @var integer
+     */
+    public $numColorsOnPalette;
+
+    /**
+     * Hex Whitelist
+     * @var array
+     */
+    public $hexWhiteList = array(
+        "#660000", "#990000", "#cc0000", "#cc3333", "#ea4c88", "#993399",
+        "#663399", "#333399", "#0066cc", "#0099cc", "#66cccc", "#77cc33",
+        "#669900", "#336600", "#666600", "#999900", "#cccc33", "#ffff00",
+        "#ffcc33", "#ff9900", "#ff6600", "#cc6633", "#996633", "#663300",
+        "#000000", "#999999", "#cccccc", "#ffffff", "#E7D8B1", "#FDADC7",
+        "#424153", "#ABBCDA", "#F5DD01"
+    );
+
+    /**
+     * RGB Whitelist
+     * @var array
+     */
+    public $RGBWhiteList = array();
+
+
+    /**
+     * Constructor
+     * @param string $image
+     * @param int $precision
+     * @param int $numColorsOnPalette
+     * @param bool $betterDifferencing
+     */
+    public function __construct($image, $precision = 10, $numColorsOnPalette = 5)
     {
-        $this->helper = new ColorDifference();
-        $this->image = $image;
-        $this->maxnumcolors = $maxnumcolors;
-        $this->trueper = $trueper;
-        $this->getImageSize();
+        $this->file = $image;
         $this->precision = $precision;
-
-        $this->readPixels();
-
-        $this->_excluded_colors[] = $this->getBackgroundColor();
+        $this->numColorsOnPalette = $numColorsOnPalette;
+        $this->setRGBWhiteList();
+        $this->setWorkingImageGD($this->file);
+        $this->readPixelsGD();
     }
 
     /**
-     * Retrieve dimensions of the image
-     * @return string
-     */
-    protected function getImageSize()
-    {
-        $imgSize = getimagesize($this->image);
-        $height = $imgSize[1];
-        $width = $imgSize[0];
-        $this->height = $height;
-        $this->width = $width;
-
-        return "x= " . $width . "y= " . $height;
-    }
-
-    /**
-     * Read pixels and set to array
-     * @return bool
-     */
-    protected function readPixels()
-    {
-
-        $image = $this->image;
-        $width = $this->width;
-        $height = $this->height;
-        $pathArray = explode('.', $image);
-        $typeOfImage = end($pathArray);
-
-        try {
-            switch ($typeOfImage) {
-                case "png":
-                    $outputImg = "imagecreatefrompng";
-                    break;
-                case "jpg":
-                    $outputImg = "imagecreatefromjpeg";
-                    break;
-                case "gif":
-                    $outputImg = "imagecreatefromgif";
-                    break;
-                case "bmp":
-                    $outputImg = "imagecreatefrombmp";
-                    break;
-                default:
-                    throw new UnsupportedFileTypeException("The file type .$typeOfImage is not supported.");
-            }
-
-            $this->workingImage = $outputImg($image);
-
-        } catch (UnsupportedFileTypeException $e) {
-            echo $e->getMessage() . "\n";
-            exit();
-        }
-
-        $hexArray = array();
-        for ($x = 0; $x < $width; $x += $this->precision) {
-            for ($y = 0; $y < $height; $y += $this->precision) {
-
-                $index = imagecolorat($this->workingImage, $x, $y);
-                $rgb = imagecolorsforindex($this->workingImage, $index);
-
-                $color = $this->getClosestColor($rgb["red"], $rgb["green"], $rgb["blue"]);
-
-                $hexArray[] = $this->RGBToHex($color[0], $color[1], $color[2]);
-            }
-        }
-
-        $coinciditions = array_count_values($hexArray);
-        $this->coinciditions = $coinciditions;
-
-        return true;
-    }
-
-    /**
-     * Retrieves closest color
-     * @param $r
-     * @param $g
-     * @param $b
-     * @return mixed
-     */
-    public function  getClosestColor($r, $g, $b)
-    {
-        if (isset($this->color_map[$this->RGBToHex($r, $g, $b)])) {
-            return $this->color_map[$this->RGBToHex($r, $g, $b)];
-        }
-
-        $differencearray = array();
-        $colors = $this->getPalette();
-
-        foreach ($colors as $key => $value) {
-            $value = $value['rgb'];
-            $differencearray[$key] = $this->getDistanceBetweenColors($value, array($r, $g, $b));
-        }
-
-        $smallest = min($differencearray);
-
-        $key = array_search($smallest, $differencearray);
-
-
-        $hex = $this->RGBToHex($r, $g, $b);
-
-        $this->color_map[$hex] = $colors[$key]['rgb'];
-
-        return $this->color_map[$hex];
-    }
-
-    /**
-     * RGB to Hex
-     * @param $r
-     * @param $g
-     * @param $b
-     * @return string
-     */
-    public function RGBToHex($r, $g, $b)
-    {
-        $hex = "#";
-        $hex .= str_pad(dechex($r), 2, "0", STR_PAD_LEFT);
-        $hex .= str_pad(dechex($g), 2, "0", STR_PAD_LEFT);
-        $hex .= str_pad(dechex($b), 2, "0", STR_PAD_LEFT);
-
-        return strtoupper($hex);
-    }
-
-    /**
-     * Get the color palette
+     * Create an array of Hex and RGB values from Hex Whitelist
      * @return array
      */
-    protected function getPalette()
+    private function setRGBWhiteList()
     {
-        if (!empty($this->_palette))
-            return $this->_palette;
-
-        $str = '["#660000", "#990000", "#cc0000", "#cc3333", "#ea4c88", "#993399", "#663399", "#333399", "#0066cc", "#0099cc", "#66cccc", "#77cc33", "#669900", "#336600", "#666600", "#999900", "#cccc33", "#ffff00", "#ffcc33", "#ff9900", "#ff6600", "#cc6633", "#996633", "#663300", "#000000", "#999999", "#cccccc", "#ffffff", "#E7D8B1", "#FDADC7", "#424153", "#ABBCDA", "#F5DD01"]';
-
-        $hexs = json_decode($str);
-
-        foreach ($hexs as $hex)
-            $this->_palette[] = array('rgb' => $this->HexToRGB($hex), 'hex' => $hex);
-
-        return $this->_palette;
+        foreach ($this->hexWhiteList as $hex) {
+            $this->RGBWhiteList[] = $this->HexToRGB($hex);
+        }
     }
 
     /**
-     * Hex to RGB
+     * Convert Hex to RGB
+     * @todo Move to ColorConversions File
      * @param $hex
      * @return array
      */
-    public function HexToRGB($hex)
+    private function HexToRGB($hex)
     {
         $hex = str_replace("#", "", $hex);
 
@@ -221,20 +135,169 @@ class ImagePalette
     }
 
     /**
-     * Get distance between colors.
-     * @param $col1
-     * @param $col2
+     * Load and set the working image.
+     * @param $image
+     */
+    private function setWorkingImageGD($image)
+    {
+        $pathArray = explode('.', $image);
+        $fileExtension = end($pathArray);
+
+        try {
+
+            switch ($fileExtension) {
+                case "png":
+                    $imageCreate = "imagecreatefrompng";
+                    break;
+                case "jpg":
+                    $imageCreate = "imagecreatefromjpeg";
+                    break;
+                case "gif":
+                    $imageCreate = "imagecreatefromgif";
+                    break;
+                case "bmp":
+                    $imageCreate = "imagecreatefrombmp";
+                    break;
+                default:
+                    throw new UnsupportedFileTypeException("The file type .$fileExtension is not supported.");
+            }
+
+            // Set working Image
+            $this->loadedImage = $imageCreate($image);
+
+            // Set Image Size
+            $this->setImageSizeGD();
+
+        } catch (UnsupportedFileTypeException $e) {
+            echo $e->getMessage() . "\n";
+            exit();
+        }
+    }
+
+    /**
+     * Get and set size of the image.
+     */
+    private function setImageSizeGD()
+    {
+        $dimensions = getimagesize($this->file);
+        $this->width = $dimensions[0];
+        $this->height = $dimensions[1];
+    }
+
+    /**
+     * Read pixels using GD and push each matching hex value into array.
+     */
+    public function readPixelsGD()
+    {
+        for ($x = 0; $x < $this->width; $x += $this->precision) { // Row
+            for ($y = 0; $y < $this->height; $y += $this->precision) { // Column
+                $index = imagecolorat($this->loadedImage, $x, $y);
+
+                // Detect and set transparent value
+                if ($this->detectTransparencyGD($index)) {
+                    $this->loadedImageColors[] = "transparent";
+                    continue;
+                }
+
+                $rgb = imagecolorsforindex($this->loadedImage, $index);
+
+                $this->loadedImageColors[] = $this->getClosestColor($rgb["red"], $rgb["green"], $rgb["blue"]);
+            }
+        }
+    }
+
+    /**
+     * Detect Transparency using GD
+     * @param $rgba
+     * @return bool
+     */
+    public function detectTransparencyGD($rgba)
+    {
+        $alpha = ($rgba & 0x7F000000) >> 24;
+
+        if ($alpha === 127)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Get closest matching color
+     * @param $r
+     * @param $g
+     * @param $b
+     * @return mixed
+     */
+    public function getClosestColor($r, $g, $b)
+    {
+        $key = '';
+        foreach ($this->RGBWhiteList as $value) {
+
+            // Push difference into diffArray
+            $diffArray[] = $this->getSimpleColorDiff($r, $value[0], $g, $value[1], $b, $value[2]);
+
+            // Find the Lowest value in the Difference Array
+            $smallest = min($diffArray);
+
+            // Search for the lowest value and set the key variable to it
+            $key = array_search($smallest, $diffArray);
+        }
+
+        // Return the hex array counterpart value
+        return $this->hexWhiteList[$key];
+    }
+
+    /**
+     * Simple Color Difference Calculation
+     * @todo Move to ColorCalculations
+     * @param $r
+     * @param $rVal
+     * @param $g
+     * @param $gVal
+     * @param $b
+     * @param $bVal
      * @return float
      */
-    protected function getDistanceBetweenColors($col1, $col2)
+    private function getSimpleColorDiff($r, $rVal, $g, $gVal, $b, $bVal)
     {
-        $xyz1 = $this->rgb_to_xyz($col1);
-        $xyz2 = $this->rgb_to_xyz($col2);
+        return sqrt(
+            pow($r - $rVal, 2)
+            +
+            pow($g - $gVal, 2)
+            +
+            pow($b - $bVal, 2)
+        );
+    }
 
-        $lab1 = $this->xyz_to_lab($xyz1);
-        $lab2 = $this->xyz_to_lab($xyz2);
+    /**
+     * Get colors
+     * @return array
+     */
+    public function getProminentColors()
+    {
+        // Count each color occurrence.
+        $countEachColor = array_count_values($this->loadedImageColors);
 
-        return $this->helper->ciede2000($lab1, $lab2);
+        //unset transparent
+        if (array_key_exists('transparent', $countEachColor))
+            unset($countEachColor['transparent']);
+
+        // Sort numerically
+        asort($countEachColor, SORT_NUMERIC);
+
+        // Reverse order, highest values first.
+        $colors = array_reverse($countEachColor, true);
+
+        $i = 0;
+        $prominent = array();
+
+        foreach ($colors as $hex => $count) {
+            $prominent[] = $hex;
+            $i++;
+            if ($i >= $this->numColorsOnPalette) break;
+        }
+
+        return $prominent;
     }
 
     /**
@@ -315,117 +378,4 @@ class ImagePalette
 
         return (array('l' => $l, 'a' => $a, 'b' => $b));
     }
-
-    /**
-     * Get the background color of the image
-     * @param bool $use_palette
-     * @return null|string
-     */
-    protected function getBackgroundColor($use_palette = true)
-    {
-
-        $top_left_color = imagecolorsforindex($this->workingImage, imagecolorat($this->workingImage, 0, 0));
-        $top_left = array($top_left_color['red'], $top_left_color['green'], $top_left_color['blue']);
-
-        $top_right_color = imagecolorsforindex($this->workingImage, imagecolorat($this->workingImage, $this->width - 1, 0));
-        $top_right = array($top_right_color['red'], $top_right_color['green'], $top_right_color['blue']);
-
-        $bottom_left_color = imagecolorsforindex($this->workingImage, imagecolorat($this->workingImage, 0, $this->height - 1));
-        $bottom_left = array($bottom_left_color['red'], $bottom_left_color['green'], $bottom_left_color['blue']);
-
-        $bottom_right_color = imagecolorsforindex($this->workingImage, imagecolorat($this->workingImage, $this->width - 1, $this->height - 1));
-        $bottom_right = array($bottom_right_color['red'], $bottom_right_color['green'], $bottom_right_color['blue']);
-
-        if ($use_palette) {
-            $top_left = call_user_func_array(array($this, 'getClosestColor'), $top_left);
-            $top_right = call_user_func_array(array($this, 'getClosestColor'), $top_right);
-            $bottom_right = call_user_func_array(array($this, 'getClosestColor'), $bottom_right);
-            $bottom_left = call_user_func_array(array($this, 'getClosestColor'), $bottom_left);
-        }
-
-        $colors = array($top_left, $top_right, $bottom_left, $bottom_right);
-
-        if (count(array_unique($colors[0])) == 1) {
-            return $this->RGBToHex($top_left[0], $top_left[1], $top_left[2]);
-        }
-
-        return null;
-    }
-
-    /**
-     * Retrieve prominent colors.
-     * @return array
-     */
-    public function getProminentColors()
-    {
-        $pixels = $this->getPercentageOfColors();
-
-        foreach ($pixels as $color => $value) {
-            if ($value < $this->_min_percentage)
-                unset($pixels[$color]);
-        }
-
-        $_c = array();
-
-        foreach ($pixels as $key => $value) {
-            $_c[] = $key;
-        }
-
-        return $_c;
-    }
-
-    /**
-     * Get percentage of colors.
-     * @return array
-     */
-    protected function getPercentageOfColors()
-    {
-        $coinciditions = $this->coinciditions;
-
-        $total = 0;
-
-        foreach ($coinciditions as $color => $cuantity) {
-
-            if (in_array($color, $this->_excluded_colors))
-                unset($coinciditions[$color]);
-
-            else
-                $total += $cuantity;
-        }
-
-        foreach ($coinciditions as $color => $cuantity) {
-            $percentage = (($cuantity / $total) * 100);
-            $finallyarray[$color] = $percentage;
-        }
-
-        if (!$coinciditions)
-            return array();
-
-        asort($finallyarray);
-        array_keys($finallyarray);
-        $outputarray = array_slice(array_reverse($finallyarray), 0, $this->maxnumcolors);
-
-        $trueper = $this->trueper;
-
-        if ($trueper && $outputarray) {
-
-            $total = 0;
-            $finallyarrayp = array();
-
-            foreach ($outputarray as $cuantity) {
-                $total += $cuantity;
-            }
-
-            foreach ($outputarray as $color => $cuantity) {
-                $percentage = (($cuantity / $total) * 100);
-                $finallyarrayp[$color] = $percentage;
-            }
-            return $finallyarrayp;
-
-        } else {
-
-            return $outputarray;
-        }
-    }
-
 }

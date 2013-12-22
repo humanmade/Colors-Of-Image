@@ -15,6 +15,7 @@ use Exception;
 
 /**
  * Class HelperAPI
+ * @todo Fix or Remove
  * @package bfoxwell\ImagePalette
  */
 class ColorDifference

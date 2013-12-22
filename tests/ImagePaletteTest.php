@@ -21,7 +21,9 @@ class ImagePaletteTest extends PHPUnit_Framework_Testcase
     private $palette;
 
     public function setUp() {
-        $this->palette = new ImagePalette('https://www.google.com/images/srpr/logo11w.png', 5);
+        $this->paletteObject = new ImagePalette('https://www.google.com/images/srpr/logo11w.png', 5, 20);
+        $this->palette = $this->paletteObject->getProminentColors();
+
     }
 
     public function tearDown() {
@@ -30,36 +32,16 @@ class ImagePaletteTest extends PHPUnit_Framework_Testcase
 
     public function testIntegrationImagePaletteIsObject()
     {
-        return $this->assertTrue(is_object($this->palette));
+        return $this->assertTrue(is_object($this->paletteObject));
     }
 
     public function testIntegrationProminentColorsIsArray()
     {
-        return $this->assertTrue(is_array($this->palette->getProminentColors()));
+        return $this->assertTrue(is_array($this->palette));
     }
 
-    /**
-     * Return an array map of all colors to their matching color counter part.
-     * @return mixed
-     */
-    public function testColorMapContainsWhite()
+    public function testIfContainsBlue()
     {
-        $width = $this->palette->width;
-        $height= $this->palette->height;
-        $hexArray = array();
-
-        for( $x = 0; $x < $width; $x += $this->palette->precision ) {
-            for ( $y = 0; $y < $height; $y += $this->palette->precision ) {
-
-                $index = imagecolorat($this->palette->workingImage, $x, $y);
-                $rgb = imagecolorsforindex($this->palette->workingImage, $index);
-
-                $color = $this->palette->getClosestColor( $rgb["red"], $rgb["green"], $rgb["blue"] );
-
-                $hexArray[ $this->palette->RGBToHex( $rgb["red"], $rgb["green"], $rgb["blue"] ) ] = $this->palette->RGBToHex( $color[0], $color[1], $color[2] );
-            }
-        }
-
-        return $this->assertContains('#FFFFFF', $hexArray);
+        return $this->assertContains('#0066cc',$this->palette);
     }
 } 
