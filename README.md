@@ -59,8 +59,18 @@ Example:
 
 ```php
 $fileOrUrl = 'https://www.google.com/images/srpr/logo11w.png';
+
 ImagePalette::getColors($fileOrUrl);
-'''
+```
+
+Result:
+```php
+array(2) {
+  [0] =>
+  string(7) "#000000"
+  [1] =>
+  string(7) "#CC3333"
+}
 ```
 
 ### Options
