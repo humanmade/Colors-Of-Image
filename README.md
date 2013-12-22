@@ -27,7 +27,7 @@ Simply add the following to your ```composer.json``` file:
 
 ```PHP
 // initiate with image
-$image = new \bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
+$image = new \Bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
 $colors = $image->getProminentColors(); // array( '#FFFDD', ... )
@@ -65,12 +65,13 @@ ImagePalette::getColors($fileOrUrl);
 
 Result:
 ```php
-array(2) {
-  [0] =>
-  string(7) "#000000"
-  [1] =>
-  string(7) "#CC3333"
-}
+array (
+  0 => '#0066cc',
+  1 => '#cc3333',
+  2 => '#ff9900',
+  3 => '#424153',
+  4 => '#cc6633',
+)
 ```
 
 ### Options
