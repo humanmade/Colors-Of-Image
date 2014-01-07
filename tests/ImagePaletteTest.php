@@ -18,7 +18,7 @@ class ImagePaletteTest extends PHPUnit_Framework_Testcase
     private $palette;
 
     public function setUp() {
-        $this->paletteObject = new ImagePalette('https://www.google.com/images/srpr/logo11w.png', 5, 20, "Imagick");
+        $this->paletteObject = new ImagePalette('https://www.google.com/images/srpr/logo11w.png', 5, 20);
         $this->palette = $this->paletteObject->getColors();
     }
 
