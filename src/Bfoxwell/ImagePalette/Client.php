@@ -24,9 +24,9 @@ class Client
      * @param $truePer
      * @return array
      */
-    public function getColors($fileOrUrl, $precision = 10, $maxNumColors = 5, $truePer = true)
+    public function getColors($fileOrUrl, $precision = 10, $maxNumColors = 5, $overrideExt = null)
     {
-        $load = new ImagePalette($fileOrUrl, $precision = 10, $maxNumColors = 5, $truePer = true);
+        $load = new ImagePalette($fileOrUrl, $precision, $maxNumColors, $overrideExt);
         return $load->getColors();
     }
 } 
