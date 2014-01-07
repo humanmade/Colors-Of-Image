@@ -41,6 +41,12 @@ class ImagePalette
      */
     public $loadedImageColors = array();
 
+	/**
+	 * Process every Nth pixel
+	 * @var int
+	 */
+	public $precision;
+
     /**
      * Width of image
      * @var integer
@@ -239,6 +245,25 @@ class ImagePalette
         }
     }
 
+	/**
+	 * Load and set working image
+	 *
+	 * @todo needs work
+	 * @param $image
+	 * @return mixed
+	 */
+	private function setWorkingImageGmagick($image)
+	{
+		return $image;
+	}
+
+	/**
+	 * Load and set working image
+	 *
+	 * @todo needs work
+	 * @param $image
+	 * @return mixed
+	 */
     private function setWorkingImageImagick($image)
     {
 
@@ -308,6 +333,11 @@ class ImagePalette
             }
         }
     }
+
+	public function readPixelsGmagick()
+	{
+		return;
+	}
 
     /**
      * Detect Transparency using GD
