@@ -90,7 +90,6 @@ class ImagePalette
      * @param string $image
      * @param int $precision
      * @param int $numColorsOnPalette
-     * @param bool $betterDifferencing
      */
     public function __construct($image, $precision = 10, $numColorsOnPalette = 5, $overrideLib = null)
     {
@@ -141,6 +140,7 @@ class ImagePalette
     /**
      * Select a graphical library and start generating the Image Palette
      * @param $overrideLib
+     * @param string $overrideLib
      * @throws \Exception
      */
     protected function process($overrideLib)
@@ -209,6 +209,7 @@ class ImagePalette
     /**
      * Load and set the working image.
      * @param $image
+     * @param string $image
      */
     private function setWorkingImageGD($image)
     {
@@ -250,6 +251,7 @@ class ImagePalette
 	 *
 	 * @todo needs work
 	 * @param $image
+	 * @param string $image
 	 * @return mixed
 	 */
 	private function setWorkingImageGmagick($image)
@@ -262,6 +264,7 @@ class ImagePalette
 	 *
 	 * @todo needs work
 	 * @param $image
+	 * @param string $image
 	 * @return mixed
 	 */
     private function setWorkingImageImagick($image)
