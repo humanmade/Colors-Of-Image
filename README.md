@@ -16,7 +16,7 @@ __________
 
 ```PHP
 // initiate with image
-$image = new ColorOfImage( 'https://www.google.co.uk/images/srpr/logo3w.png' );
+$image = new ColorsOfImage( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
 $colors = $image->getProminentColors(); // array( '#FFFDD', ... )
@@ -29,10 +29,10 @@ __________
 
 **Precision**
 
-By default, `ColorOfImage` will process every 10th pixel. This is for performance reasons, you can change this like below. The precision is a performance-to-time desicion.
+By default, `ColorsOfImage` will process every 10th pixel. This is for performance reasons, you can change this like below. The precision is a performance-to-time desicion.
 
 ```PHP
-$image = new ColorOfImage( $src, 5 /* precision */ );
+$image = new ColorsOfImage( $src, 5 /* precision */ );
 ```
 
 **Color Count**
@@ -40,7 +40,7 @@ $image = new ColorOfImage( $src, 5 /* precision */ );
 To control the amount colors returned set the third parameter.
 
 ```PHP
-$image = new ColorOfImage( $src, 5, 3 /* number of colors to return */ );
+$image = new ColorsOfImage( $src, 5, 3 /* number of colors to return */ );
 ```
 
 ## Contribution guidelines ##
