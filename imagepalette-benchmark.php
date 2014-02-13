@@ -52,14 +52,14 @@ echo $palette;
 ping('__toString finished');
 
 foreach ($palette->getHexStringPalette() as $color) {
-    echo '<span style="display:inline-block;width:6em;height:2em;background-color:'
+    echo '<span style="display:inline-block;width:6em;height:2em;background-color:#'
         . $color
         . '"></span>';
 }
 
 echo '<br /><img src="' . $img . '" alt="" style="max-width:500px;max-height:300px" />';
 
-ping('the end');
+ping('preview finished');
 
 // –––––––––––––––––
 

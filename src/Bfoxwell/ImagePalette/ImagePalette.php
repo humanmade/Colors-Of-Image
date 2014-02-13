@@ -21,7 +21,7 @@ use Imagick;
  *
  * @package bfoxwell\ImagePalette
  */
-class ImagePalette
+class ImagePalette implements \IteratorAggregate
 {
     /**
      * File or Url
@@ -497,7 +497,7 @@ class ImagePalette
     public function getHexStringPalette($paletteLength = null)
     {
         return array_map(function($color) {
-                return '#' . str_pad(dechex($color), 6, '0', STR_PAD_LEFT);
+                return '' . str_pad(dechex($color), 6, '0', STR_PAD_LEFT);
             },
             $this->getPalette($paletteLength)
         );
@@ -519,8 +519,25 @@ class ImagePalette
         );
     }
     
+    /**
+     * Returns a json encoded version of the palette
+     * 
+     * @return string
+     */
     public function __toString()
     {
         return json_encode($this->getHexStringPalette());
+    }
+    
+    /**
+     * Returns the palette for implementation of the IteratorAggregate interface
+     * Used in foreach loops
+     * 
+     * @see  getPalette()
+     * @return array
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->getPalette());
     }
 }
