@@ -31,10 +31,19 @@ Simply add the following to your ```composer.json``` file:
 
 ```PHP
 // initiate with image
-$image = new \Bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
+$palette = new \Bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
-$colors = $image->getColors(); // array( '#FFFDD', ... )
+$colors = $palette->colors;          // array(0xffffdd, ...)
+$colors = $palette->rgbColors;       // array(array(255, 0, 15), ...)
+$colors = $palette->hexStringColors; // array('ffffdd', ...)
+$colors = $palette->rgbStringColors; // array('(255,0,15)', ...)
+
+// to string as json
+echo $palette; // '["ffffdd", ... ]'
+
+// implements IteratorAggregate
+foreach ($palette as $color) { ... }
 ```
 
 And there we go!
@@ -64,7 +73,7 @@ Example:
 ```php
 $fileOrUrl = 'https://www.google.com/images/srpr/logo11w.png';
 
-ImagePalette::getColors($fileOrUrl);
+ImagePalette::getHexStringColors($fileOrUrl);
 ```
 
 Result:

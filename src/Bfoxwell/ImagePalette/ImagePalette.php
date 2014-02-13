@@ -28,19 +28,13 @@ class ImagePalette implements \IteratorAggregate
      * @var string
      */
     protected $file;
-
+    
     /**
      * Loaded Image
      * @var object
      */
     protected $loadedImage;
-
-    /**
-     * Loaded Image Colors in Hex
-     * @var array
-     */
-    protected $loadedImageColors = array();
-
+    
     /**
      * Process every Nth pixel
      * @var int
@@ -66,7 +60,7 @@ class ImagePalette implements \IteratorAggregate
     protected $paletteLength;
 
     /**
-     * Hex Whitelist
+     * Colors Whitelist
      * @var array
      */
     protected $whiteList = array(
@@ -78,6 +72,10 @@ class ImagePalette implements \IteratorAggregate
         0x424153, 0xABBCDA, 0xF5DD01
     );
     
+    /**
+     * Colors hits, keys are colors from whiteList
+     * @var array
+     */
     protected $whiteListHits;
     
     /**
@@ -242,9 +240,7 @@ class ImagePalette implements \IteratorAggregate
      */
     protected function setImageSizeGD()
     {
-        $dimensions = getimagesize($this->file);
-        $this->width = $dimensions[0];
-        $this->height = $dimensions[1];
+        list($this->width, $this->height) = getimagesize($this->file);
     }
     
     /**
@@ -253,7 +249,7 @@ class ImagePalette implements \IteratorAggregate
     protected function setImageSizeImagick()
     {
         $d = $this->loadedImage->getImageGeometry();
-        $this->width = $d['width'];
+        $this->width  = $d['width'];
         $this->height = $d['height'];
     }
     
@@ -340,6 +336,7 @@ class ImagePalette implements \IteratorAggregate
 
     /**
      * Detect Transparency using GD
+     * 
      * @param $rgbaColor
      * @return bool
      */
@@ -395,10 +392,10 @@ class ImagePalette implements \IteratorAggregate
         return array(
             
             // red
-            ($color / 0x10000) % 0x100,
+            ($color >> 16) % 0x100,
             
             // green
-            ($color / 0x100) % 0x100,
+            ($color >> 8) % 0x100,
             
             // blue
             $color % 0x100
@@ -416,38 +413,7 @@ class ImagePalette implements \IteratorAggregate
      */
     public static function rgbToColor($r, $g, $b)
     {
-        return $r * 0x10000 + $g * 0x100 + $b;
-    }
-
-    /**
-     * Get colors
-     * @return array
-     */
-    public function getColors()
-    {
-        // Count each color occurrence.
-        $countEachColor = array_count_values($this->loadedImageColors);
-
-        //unset transparent
-        if (array_key_exists('transparent', $countEachColor))
-            unset($countEachColor['transparent']);
-
-        // Sort numerically
-        asort($countEachColor, SORT_NUMERIC);
-
-        // Reverse order, highest values first.
-        $colors = array_reverse($countEachColor, true);
-
-        $i = 0;
-        $prominent = array();
-
-        foreach ($colors as $hex => $count) {
-            $prominent[] = $hex;
-            $i++;
-            if ($i >= $this->paletteLength) break;
-        }
-
-        return $prominent;
+        return ($r << 16) + ($g << 8) + $b;
     }
     
     /**
@@ -457,7 +423,7 @@ class ImagePalette implements \IteratorAggregate
      * @param  int $paletteLength
      * @return array
      */
-    public function getPalette($paletteLength = null)
+    public function getColors($paletteLength = null)
     {
         // allow custom length calls
         if (!is_numeric($paletteLength)) {
@@ -478,12 +444,12 @@ class ImagePalette implements \IteratorAggregate
      * @param  int $paletteLength
      * @return array
      */
-    public function getRgbArraysPalette($paletteLength = null)
+    public function getRgbColors($paletteLength = null)
     {
         return array_map(
             // static method call
             array('self', 'colorToRgb'),
-            $this->getPalette($paletteLength)
+            $this->getColors($paletteLength)
         );
     }
     
@@ -494,28 +460,28 @@ class ImagePalette implements \IteratorAggregate
      * @param  int $paletteLength
      * @return array
      */
-    public function getHexStringPalette($paletteLength = null)
+    public function getHexStringColors($paletteLength = null)
     {
         return array_map(function($color) {
-                return '' . str_pad(dechex($color), 6, '0', STR_PAD_LEFT);
+                return '#' . str_pad(dechex($color), 6, '0', STR_PAD_LEFT);
             },
-            $this->getPalette($paletteLength)
+            $this->getColors($paletteLength)
         );
     }
     
     /**
      * Returns the color palette as an array containing
-     * decimal string representations, like 'rgb(123,0,20)'
+     * decimal string representations, like '(123,0,20)'
      * 
      * @param  int $paletteLength
      * @return array
      */
-    public function getRgbStringPalette($paletteLength = null)
+    public function getRgbStringColors($paletteLength = null)
     {
         return array_map(function($rgb) {
                 return 'rgb(' . $rgb[0] . ',' . $rgb[1] . ',' . $rgb[2] . ')';
             },
-            $this->getRgbArraysPalette($paletteLength)
+            $this->getRgbColors($paletteLength)
         );
     }
     
@@ -526,18 +492,32 @@ class ImagePalette implements \IteratorAggregate
      */
     public function __toString()
     {
-        return json_encode($this->getHexStringPalette());
+        return json_encode($this->getHexStringColors());
+    }
+    
+    /**
+     * Convenient getter access as properties
+     * 
+     * @return  mixed
+     */
+    public function __get($name)
+    {
+        $method = 'get' . ucfirst($name);
+        if (method_exists($this, $method)) {
+            return $this->$method();
+        }
+        throw new \Exception("Method $method does not exist");
     }
     
     /**
      * Returns the palette for implementation of the IteratorAggregate interface
      * Used in foreach loops
      * 
-     * @see  getPalette()
+     * @see  getColors()
      * @return array
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->getPalette());
+        return new \ArrayIterator($this->getColors());
     }
 }
