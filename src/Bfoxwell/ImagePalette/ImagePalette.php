@@ -420,6 +420,30 @@ class ImagePalette implements \IteratorAggregate
     }
     
     /**
+     * Render 6-digit hexadecimal string representation
+     * like '#abcdef'
+     * 
+     * @param  int $color
+     * @return string
+     */
+    public static function colorToHexString($color)
+    {
+        return '#' . str_pad(dechex($color), 6, '0', STR_PAD_LEFT);
+    }
+    
+    /**
+     * Render 3-integer decimal string representation
+     * like 'rgb(123,0,20)'
+     * 
+     * @param  array $rgb  array of three ints or decimal string representations
+     * @return string
+     */
+    public static function rgbToString($rgb)
+    {
+        return 'rgb(' . $rgb[0] . ',' . $rgb[1] . ',' . $rgb[2] . ')';
+    }
+    
+    /**
      * Returns the color palette as an array containing
      * an integer for each color
      * 
@@ -465,25 +489,25 @@ class ImagePalette implements \IteratorAggregate
      */
     public function getHexStringColors($paletteLength = null)
     {
-        return array_map(function($color) {
-                return '#' . str_pad(dechex($color), 6, '0', STR_PAD_LEFT);
-            },
+        return array_map(
+            // static method call
+            array('self', 'colorToHexString'),
             $this->getColors($paletteLength)
         );
     }
     
     /**
      * Returns the color palette as an array containing
-     * decimal string representations, like '(123,0,20)'
+     * decimal string representations, like 'rgb(123,0,20)'
      * 
      * @param  int $paletteLength
      * @return array
      */
     public function getRgbStringColors($paletteLength = null)
     {
-        return array_map(function($rgb) {
-                return 'rgb(' . $rgb[0] . ',' . $rgb[1] . ',' . $rgb[2] . ')';
-            },
+        return array_map(
+            // static method call
+            array('self', 'rgbToString'),
             $this->getRgbColors($paletteLength)
         );
     }
