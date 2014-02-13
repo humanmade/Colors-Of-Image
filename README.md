@@ -36,11 +36,11 @@ $palette = new \Bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/im
 // get the prominent colors
 $colors = $palette->colors;          // array(0xffffdd, ...)
 $colors = $palette->rgbColors;       // array(array(255, 0, 15), ...)
-$colors = $palette->hexStringColors; // array('ffffdd', ...)
-$colors = $palette->rgbStringColors; // array('(255,0,15)', ...)
+$colors = $palette->hexStringColors; // array('#ffffdd', ...)
+$colors = $palette->rgbStringColors; // array('rgb(255,0,15)', ...)
 
 // to string as json
-echo $palette; // '["ffffdd", ... ]'
+echo $palette; // '["#ffffdd", ... ]'
 
 // implements IteratorAggregate
 foreach ($palette as $color) { ... }
@@ -94,15 +94,17 @@ array (
 By default, `ImagePalette` will process every 10th pixel. This is for performance reasons, you can change this like below. The precision is a performance-to-time decision.
 
 ```PHP
-$image = new \bfoxwell\ImagePalette\ImagePalette( $src, 5 /* precision */ );
+$palette = new \bfoxwell\ImagePalette\ImagePalette( $src, 5 /* precision */ );
 ```
 
 #### Color Count
 
 To control the amount colors returned set the third parameter.
+It can also be set for each getter.
 
 ```PHP
-$image = new \bfoxwell\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors to return */ );
+$palette = new \bfoxwell\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors to return */ );
+$colors = $palette->getColors(7 /* number of colors to return */);
 ```
 
 ## Contribution guidelines ##

@@ -265,7 +265,10 @@ class ImagePalette implements \IteratorAggregate
             // Column
             for ($y = 0; $y < $this->height; $y += $this->precision) {
                 
-                list($r, $g, $b) = $this->getPixelColor($x, $y);
+                list($rgba, $r, $g, $b) = $this->getPixelColor($x, $y);
+                
+                if (self::isTransparent($rgba))
+                    continue 1;
                 
                 $this->whiteListHits[ $this->getClosestColor($r, $g, $b) ]++;
             }
@@ -274,9 +277,10 @@ class ImagePalette implements \IteratorAggregate
     
     /**
      * Returns an array describing the color at x,y
-     * At index 0 is the color's red value
-     * At index 1 is the color's green value
-     * At index 2 is the color's blue value
+     * At index 0 is the color as a whole int (may include alpha)
+     * At index 1 is the color's red value
+     * At index 2 is the color's green value
+     * At index 3 is the color's blue value
      * 
      * @param  int $x
      * @param  int $y
@@ -301,7 +305,7 @@ class ImagePalette implements \IteratorAggregate
         $rgb = imagecolorsforindex($this->loadedImage, $color);
         
         return array(
-            // $color,
+            $color,
             $rgb['red'],
             $rgb['green'],
             $rgb['blue']
@@ -321,7 +325,7 @@ class ImagePalette implements \IteratorAggregate
         $rgb = $this->loadedImage->getImagePixelColor($x,$y)->getColor();
         
         return array(
-            // $this->rgbToColor($rgb['r'], $rgb['g'], $rgb['b']),
+            $this->rgbToColor($rgb['r'], $rgb['g'], $rgb['b']),
             $rgb['r'],
             $rgb['g'],
             $rgb['b']
@@ -333,20 +337,7 @@ class ImagePalette implements \IteratorAggregate
         throw new \Exception("Gmagick not supported");
         return;
     }
-
-    /**
-     * Detect Transparency using GD
-     * 
-     * @param $rgbaColor
-     * @return bool
-     */
-    public function detectTransparency($rgbaColor)
-    {
-        $alpha = $rgbaColor >> 24;
-        
-        return $alpha === 127;
-    }
-
+    
     /**
      * Get closest matching color
      * 
@@ -378,6 +369,18 @@ class ImagePalette implements \IteratorAggregate
         }
         
         return $this->whiteList[$bestKey];
+    }
+    
+    /**
+     * Detect Transparency using GD
+     * 
+     * @param $rgbaColor
+     * @return bool
+     */
+    public static function isTransparent($rgbaColor)
+    {
+        $alpha = $rgbaColor >> 24;
+        return $alpha === 127;
     }
     
     /**

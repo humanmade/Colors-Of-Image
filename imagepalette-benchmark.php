@@ -7,8 +7,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 $img = 'https://www.google.com/images/srpr/logo11w.png';
-// $img = 'http://wallpapers.wallbase.cc/rozne/wallpaper-2312526.jpg';
-// $img = 'http://thumbs.wallbase.cc//rozne/thumb-2312526.jpg';
 
 
 $startPing;
@@ -53,18 +51,18 @@ var_export((string) $palette);
 ping('__toString finished');
 
 // color demonstration
+echo "hex strings:\n";
 foreach ($palette->getHexStringColors() as $color) {
-    echo '<span style="display:inline-block;width:6em;height:2em;background-color:#'
+    echo '<span style="display:inline-block;width:6em;height:2em;background-color:'
         . $color
         . '"></span>';
 }
-echo "<br /><br />";
+echo "\nrgb strings:\n";
 foreach ($palette->getRgbStringColors() as $color) {
-    echo '<span style="display:inline-block;width:6em;height:2em;background-color:rgb'
+    echo '<span style="display:inline-block;width:6em;height:2em;background-color:'
         . $color
         . '"></span>';
 }
-echo "<br /><br />";
 
 ping('preview finished');
 
