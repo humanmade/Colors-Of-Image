@@ -94,18 +94,23 @@ class ImagePalette implements \IteratorAggregate
     public function __construct($file, $precision = 10, $paletteLength = 5, $overrideLib = null)
     {
         $this->file = $file;
-        
         $this->precision = $precision;
         $this->paletteLength = $paletteLength;
         
-        $this->initWhiteList();
+        // use provided libname or auto-detect
+        $this->lib = $overrideLib ? $overrideLib : $this->detectLib();
         
-        if ($overrideLib) $this->lib = $overrideLib;
-        else              $this->lib = $this->detectLib();
+        // creates an array with our colors as keys
+        $this->whiteListHits = array_fill_keys($this->whiteList, 0);
         
+        // go!
         $this->process($this->lib);
         
+        // sort color-keyed array by hits
         arsort($this->whiteListHits);
+        
+        // sort whiteList accordingly
+        $this->whiteList = array_keys($this->whiteListHits);
     }
 
 
@@ -118,17 +123,14 @@ class ImagePalette implements \IteratorAggregate
     {
         try {
             if (extension_loaded('gd') && function_exists('gd_info')) {
-
                 return 'GD';
-
+                
             } else if(extension_loaded('imagick')) {
-
                 return 'Imagick';
-
+                
             } else if(extension_loaded('gmagick')) {
-
                 return 'Gmagick';
-
+                
             }
 
             throw new \Exception(
@@ -140,13 +142,6 @@ class ImagePalette implements \IteratorAggregate
         }
     }
     
-    protected function initWhiteList()
-    {
-        foreach($this->whiteList as $color) {
-            $this->whiteListHits[$color] = 0;
-        }
-    }
-
     /**
      * Select a graphical library and start generating the Image Palette
      * @param string $lib
@@ -267,6 +262,7 @@ class ImagePalette implements \IteratorAggregate
                 
                 list($rgba, $r, $g, $b) = $this->getPixelColor($x, $y);
                 
+                // transparent pixels don't really have a color
                 if (self::isTransparent($rgba))
                     continue 1;
                 
@@ -373,6 +369,7 @@ class ImagePalette implements \IteratorAggregate
     
     /**
      * Detect Transparency using GD
+     * Returns true if the provided color has zero opacity
      * 
      * @param $rgbaColor
      * @return bool
@@ -416,7 +413,7 @@ class ImagePalette implements \IteratorAggregate
      */
     public static function rgbToColor($r, $g, $b)
     {
-        return ($r << 16) + ($g << 8) + $b;
+        return ($r << 16) | ($g << 8) | $b;
     }
     
     /**
@@ -457,11 +454,8 @@ class ImagePalette implements \IteratorAggregate
             $paletteLength = $this->paletteLength;
         }
         
-        // keys of hits array are colors as int
-        return array_keys(
-            // take the best hits, preserve keys
-            array_slice($this->whiteListHits, 0, $paletteLength, true)
-        );
+        // take the best hits
+        return array_slice($this->whiteList, 0, $paletteLength, true);
     }
     
     /**
