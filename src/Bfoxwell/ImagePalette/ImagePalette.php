@@ -392,13 +392,13 @@ class ImagePalette implements \IteratorAggregate
         return array(
             
             // red
-            ($color >> 16) % 0x100,
+            ($color >> 16) & 0xff,
             
             // green
-            ($color >> 8) % 0x100,
+            ($color >> 8) & 0xff,
             
             // blue
-            $color % 0x100
+            $color & 0xff
         );
     }
     
