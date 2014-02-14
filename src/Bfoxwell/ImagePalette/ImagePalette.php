@@ -289,8 +289,10 @@ class ImagePalette implements \IteratorAggregate
     protected function getClosestColor(Color $color)
     {
         
-        $bestColor;
         $bestDiff = PHP_INT_MAX;
+        
+        // default to black so hhvm won't cry
+        $bestColor = 0x000000;
         
         foreach ($this->whiteList as $wlColor => $hits) {
             
