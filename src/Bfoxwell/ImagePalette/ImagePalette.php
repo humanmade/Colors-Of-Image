@@ -264,7 +264,7 @@ class ImagePalette implements \IteratorAggregate
                 list($rgba, $r, $g, $b) = $this->getPixelColor($x, $y);
                 
                 // transparent pixels don't really have a color
-                if (self::isTransparent($rgba))
+                if (ColorUtil::isTransparent($rgba))
                     continue 1;
                 
                 $this->whiteListHits[ $this->getClosestColor($r, $g, $b) ]++;
@@ -353,7 +353,7 @@ class ImagePalette implements \IteratorAggregate
         for ( $i = 0 ; $i < $whiteListLength ; $i++ ) {
             
             // get whitelisted values
-            list($wlr, $wlg, $wlb) = self::colorToRgb($this->whiteList[$i]);
+            list($wlr, $wlg, $wlb) = ColorUtil::intToRgb($this->whiteList[$i]);
             
             // calculate difference (don't sqrt)
             $diff = pow($r - $wlr, 2) + pow($g - $wlg, 2) + pow($b - $wlb, 2);

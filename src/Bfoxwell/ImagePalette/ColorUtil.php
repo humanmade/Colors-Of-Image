@@ -23,8 +23,23 @@ class ColorUtil
      */
     public static function isTransparent($rgbaColor)
     {
-        $alpha = $rgbaColor >> 24;
-        return $alpha === 127;
+        return $rgbaColor >> 24 === 127;
+    }
+    
+    /**
+     * Expands short notation colors
+     * like 0xabc to long notation 0xaabbcc
+     * 
+     * @param  int $shortColor
+     * @return int
+     */
+    public static function expand($shortColor)
+    {
+        // check if we really got a short color
+        if ($shortColor >> 12 !== 0) return $shortColor;
+        
+        list($r, $g, $b) = self::shortToRgb($shortColor);
+        return self::rgbToInt($r, $g, $b);
     }
     
     /**
@@ -46,6 +61,29 @@ class ColorUtil
             
             // blue
             $color & 0xff
+        );
+    }
+    
+    /**
+     * Returns an array containing int values for
+     * red, green and blue of a color in short
+     * notation like 0xabc
+     * 
+     * @param  ing $color
+     * @return array
+     */
+    public static function shortToRgb($shortColor)
+    {
+        return array(
+            
+            // red
+            (($shortColor >> 8) & 0xf) * 0x11,
+            
+            // green
+            (($shortColor >> 4) & 0xf) * 0x11,
+            
+            // blue
+            ($shortColor & 0xf) * 0x11
         );
     }
     
