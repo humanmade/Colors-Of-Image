@@ -34,10 +34,11 @@ Simply add the following to your ```composer.json``` file:
 $palette = new \Bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
-$colors = $palette->colors;          // array(0xffffdd, ...)
-$colors = $palette->rgbColors;       // array(array(255, 0, 15), ...)
+$colors = $palette->colors;          // array('#ffffdd', ...)
 $colors = $palette->hexStringColors; // array('#ffffdd', ...)
 $colors = $palette->rgbStringColors; // array('rgb(255,0,15)', ...)
+$colors = $palette->intcolors;       // array(0xffffdd, ...)
+$colors = $palette->rgbColors;       // array(array(255, 0, 15), ...)
 
 // to string as json
 echo $palette; // '["#ffffdd", ... ]'
@@ -73,7 +74,7 @@ Example:
 ```php
 $fileOrUrl = 'https://www.google.com/images/srpr/logo11w.png';
 
-ImagePalette::getHexStringColors($fileOrUrl);
+ImagePalette::getColors($fileOrUrl);
 ```
 
 Result:
