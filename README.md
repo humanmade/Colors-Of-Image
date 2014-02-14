@@ -44,10 +44,10 @@ foreach ($palette as $color) {
   // Color provides several getters/properties
   echo $color;             // '#ffffdd'
   echo $color->rgbString;  // 'rgb(255,255,221)'
-  echo $color->argbString; // 'argb(255,255,221,0.25)'
+  echo $color->rgbaString; // 'rgba(255,255,221,0.25)'
   echo $color->int;        // 0xffffdd
   echo $color->rgb;        // array(255,255,221)
-  echo $color->argb;       // array(255,255,221,0.25)
+  echo $color->rgba;       // array(255,255,221,0.25)
   // ...
 }
 ```
