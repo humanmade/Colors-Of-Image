@@ -89,7 +89,7 @@ ImagePalette::getColors($fileOrUrl);
 By default, `ImagePalette` will process every 10th pixel. This is for performance reasons, you can change this like below. The precision is a performance-to-time decision.
 
 ```PHP
-$palette = new \bfoxwell\ImagePalette\ImagePalette( $src, 5 /* precision */ );
+$palette = new \Bfoxwell\ImagePalette\ImagePalette( $src, 5 /* precision */ );
 ```
 
 #### Color Count
@@ -98,7 +98,7 @@ To control the amount colors returned set the third parameter.
 You can also provide the getter with a custom length.
 
 ```PHP
-$palette = new \bfoxwell\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors to return */ );
+$palette = new \Bfoxwell\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors to return */ );
 $colors = $palette->getColors(7 /* number of colors to return */);
 ```
 
