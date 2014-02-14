@@ -31,10 +31,25 @@ Simply add the following to your ```composer.json``` file:
 
 ```PHP
 // initiate with image
-$image = new \Bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
+$palette = new \Bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
-$colors = $image->getColors(); // array( '#FFFDD', ... )
+$colors = $palette->colors; // array of Color objects
+
+// to string as json
+echo $palette; // '["#ffffdd", ... ]'
+
+// implements IteratorAggregate
+foreach ($palette as $color) {
+  // Color provides several getters/properties
+  echo $color;             // '#ffffdd'
+  echo $color->rgbString;  // 'rgb(255,255,221)'
+  echo $color->rgbaString; // 'rgba(255,255,221,0.25)'
+  echo $color->int;        // 0xffffdd
+  echo $color->rgb;        // array(255,255,221)
+  echo $color->rgba;       // array(255,255,221,0.25)
+  // ...
+}
 ```
 
 And there we go!
@@ -67,17 +82,6 @@ $fileOrUrl = 'https://www.google.com/images/srpr/logo11w.png';
 ImagePalette::getColors($fileOrUrl);
 ```
 
-Result:
-```php
-array (
-  0 => '#0066cc',
-  1 => '#cc3333',
-  2 => '#ff9900',
-  3 => '#424153',
-  4 => '#cc6633',
-)
-```
-
 ### Options
 
 #### Precision
@@ -85,15 +89,17 @@ array (
 By default, `ImagePalette` will process every 10th pixel. This is for performance reasons, you can change this like below. The precision is a performance-to-time decision.
 
 ```PHP
-$image = new \bfoxwell\ImagePalette\ImagePalette( $src, 5 /* precision */ );
+$palette = new \bfoxwell\ImagePalette\ImagePalette( $src, 5 /* precision */ );
 ```
 
 #### Color Count
 
 To control the amount colors returned set the third parameter.
+You can also provide the getter with a custom length.
 
 ```PHP
-$image = new \bfoxwell\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors to return */ );
+$palette = new \bfoxwell\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors to return */ );
+$colors = $palette->getColors(7 /* number of colors to return */);
 ```
 
 ## Contribution guidelines ##

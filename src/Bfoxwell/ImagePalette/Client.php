@@ -17,11 +17,13 @@ namespace Bfoxwell\ImagePalette;
 class Client
 {
     /**
-     * Get most prominent colors.
-     * @param $fileOrUrl
-     * @param int $precision
-     * @param int $maxNumColors
-     * @param $truePer
+     * Get most prominent colors as array
+     * of bfoxwell\ImagePalette\Color
+     * 
+     * @param mixed  $fileOrUrl
+     * @param int    $precision
+     * @param int    $maxNumColors
+     * @param string $overrideExt
      * @return array
      */
     public function getColors($fileOrUrl, $precision = 10, $maxNumColors = 5, $overrideExt = null)
