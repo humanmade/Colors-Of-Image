@@ -346,7 +346,7 @@ class ImagePalette implements \IteratorAggregate
     protected function getClosestColor($r, $g, $b)
     {
         
-        $bestKey = 0;
+        $bestColor = 0;
         $bestDiff = PHP_INT_MAX;
         $whiteListLength = count($this->whiteList);
         
@@ -365,7 +365,7 @@ class ImagePalette implements \IteratorAggregate
             }
         }
         
-        return $this->whiteList[$bestKey];
+        return $bestColor;
     }
     
     /**
