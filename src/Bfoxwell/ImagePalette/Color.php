@@ -173,9 +173,9 @@ class Color {
      * 
      * @return array
      */
-    public function toArgb()
+    public function toRgba()
     {
-        return array($this->r, $this->g, $this->b, $this->a / 0x100);
+        return array($this->r, $this->g, $this->b, 1 - $this->a / 0x100);
     }
     
     /**
@@ -218,18 +218,18 @@ class Color {
     
     /**
      * Render 3-integer decimal string representation
-     * like 'argb(123,0,20,0.5)'
+     * like 'rgba(123,0,20,0.5)'
      * 
      * @param  string  $prefix          defaults to 'argb'
      * @param  int     $alphaPrecision  max alpha digits, default 2
      * @return string
      */
-    public function toArgbString($prefix = 'argb', $alphaPrecision = 2)
+    public function toRgbaString($prefix = 'rgba', $alphaPrecision = 2)
     {
         return $prefix  . '('
              . $this->r . ','
              . $this->g . ','
              . $this->b . ','
-             . round($this->a / 0x100, $alphaPrecision) . ')';
+             . round(1 - $this->a / 0x100, $alphaPrecision) . ')';
     }
 }
