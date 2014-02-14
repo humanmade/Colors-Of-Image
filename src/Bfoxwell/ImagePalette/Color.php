@@ -1,5 +1,15 @@
 <?php
 
+namespace Bfoxwell\ImagePalette;
+
+/**
+ * 
+ * Represents an argb color
+ * 
+ * @author  Gandalfx
+ * @package bfoxwell\ImagePalette
+ * 
+ */
 class Color {
     
     /**
@@ -40,12 +50,12 @@ class Color {
                 $this->r = (($color >>  8) & 0xf) * 0x11;
                 $this->g = (($color >>  4) & 0xf) * 0x11;
                 $this->b =  ($color        & 0xf) * 0x11;
-                $this->a =  ($color >> 12)        * 0x11;
+                $this->a = (($color >> 12) & 0xf) * 0x11;
             } else {
-                $this->r = ($color >> 16) & 0xf;
-                $this->g = ($color >>  8) & 0xf;
-                $this->b =  $color        & 0xf;
-                $this->a =  $color >> 24;
+                $this->r = ($color >> 16) & 0xff;
+                $this->g = ($color >>  8) & 0xff;
+                $this->b =  $color        & 0xff;
+                $this->a = ($color >> 24) & 0xff;
             }
             
         } elseif (is_array($color)) {
@@ -87,11 +97,29 @@ class Color {
      * Magic method, alias for toHexString
      * 
      * @see  toHexString()
-     * @return string [description]
+     * @return string
      */
     public function __toString()
     {
         return $this->toHexString();
+    }
+    
+    /**
+     * Returns the difference between this color
+     * and the provided color
+     * using simple pythagoras *without* sqrt
+     * 
+     * @param  int|Color
+     * @return int
+     */
+    public function getDiff($color)
+    {
+        if (!$color instanceof Color) {
+            $color = new Color($color);
+        }
+        return pow($this->r - $color->r, 2)
+             + pow($this->g - $color->g, 2)
+             + pow($this->b - $color->b, 2);
     }
     
     /**
@@ -115,6 +143,17 @@ class Color {
     public function isTransparent()
     {
         return $this->a === 127;
+    }
+    
+    /**
+     * Returns an array containing int values for
+     * red, green, blue and alpha
+     * 
+     * @return array
+     */
+    public function toArray()
+    {
+        return array($this->r, $this->g, $this->b, $this->a);
     }
     
     /**
@@ -159,7 +198,7 @@ class Color {
      */
     public function toHexString($prefix = '#')
     {
-        return $prefix . str_pad(dechex($this->toInt), 6, '0', STR_PAD_LEFT);
+        return $prefix . str_pad(dechex($this->toInt()), 6, '0', STR_PAD_LEFT);
     }
     
     /**
