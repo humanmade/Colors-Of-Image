@@ -35,13 +35,14 @@ class Color {
      * @var int
      */
     public $a;
-    
-    
-    /**
-     * Construct new Color
-     * 
-     * @param int $color
-     */
+
+
+	/**
+	 * Construct new Color
+	 *
+	 * @param int $color
+	 * @param bool $short
+	 */
     public function __construct($color = 0x000000, $short = false)
     {
         if (is_numeric($color)) {
@@ -66,13 +67,14 @@ class Color {
                 $this->a = $color[3];
         }
     }
-    
-    /**
-     * Some useful magic getters
-     * 
-     * @param  string $property
-     * @return mixed
-     */
+
+	/**
+	 * Some useful magic getters
+	 *
+	 * @param  string $property
+	 * @throws \Exception
+	 * @return mixed
+	 */
     public function __get($property)
     {
         $method = 'to' . ucfirst($property);
@@ -132,14 +134,13 @@ class Color {
     {
         return (boolean) $this->a;
     }
-    
-    /**
-     * Detect Transparency using GD
-     * Returns true if the provided color has zero opacity
-     * 
-     * @param $rgbaColor
-     * @return bool
-     */
+
+	/**
+	 * Detect Transparency using GD
+	 * Returns true if the provided color has zero opacity
+	 *
+	 * @return bool
+	 */
     public function isTransparent()
     {
         return $this->a === 127;
