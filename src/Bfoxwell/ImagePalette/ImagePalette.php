@@ -9,6 +9,7 @@
  */
 
 namespace Bfoxwell\ImagePalette;
+require_once('ColorUtil.php');
 
 use Bfoxwell\ImagePalette\Exception\UnsupportedFileTypeException;
 use Imagick;
@@ -368,79 +369,6 @@ class ImagePalette implements \IteratorAggregate
     }
     
     /**
-     * Detect Transparency using GD
-     * Returns true if the provided color has zero opacity
-     * 
-     * @param $rgbaColor
-     * @return bool
-     */
-    public static function isTransparent($rgbaColor)
-    {
-        $alpha = $rgbaColor >> 24;
-        return $alpha === 127;
-    }
-    
-    /**
-     * Returns an array containing int values for
-     * red, green and blue
-     * 
-     * @param  ing $color
-     * @return array
-     */
-    public static function colorToRgb($color)
-    {
-        return array(
-            
-            // red
-            ($color >> 16) & 0xff,
-            
-            // green
-            ($color >> 8) & 0xff,
-            
-            // blue
-            $color & 0xff
-        );
-    }
-    
-    /**
-     * Returns an int representing the color
-     * defined by the red, green and blue values
-     * 
-     * @param  int $r
-     * @param  int $g
-     * @param  int $b
-     * @return int
-     */
-    public static function rgbToColor($r, $g, $b)
-    {
-        return ($r << 16) | ($g << 8) | $b;
-    }
-    
-    /**
-     * Render 6-digit hexadecimal string representation
-     * like '#abcdef'
-     * 
-     * @param  int $color
-     * @return string
-     */
-    public static function colorToHexString($color)
-    {
-        return '#' . str_pad(dechex($color), 6, '0', STR_PAD_LEFT);
-    }
-    
-    /**
-     * Render 3-integer decimal string representation
-     * like 'rgb(123,0,20)'
-     * 
-     * @param  array $rgb  array of three ints or decimal string representations
-     * @return string
-     */
-    public static function rgbToString($rgb)
-    {
-        return 'rgb(' . $rgb[0] . ',' . $rgb[1] . ',' . $rgb[2] . ')';
-    }
-    
-    /**
      * Returns the color palette as an array containing
      * an integer for each color
      * 
@@ -468,8 +396,7 @@ class ImagePalette implements \IteratorAggregate
     public function getRgbColors($paletteLength = null)
     {
         return array_map(
-            // static method call
-            array('self', 'colorToRgb'),
+            'Bfoxwell\ImagePalette\ColorUtil::intToRgb',
             $this->getIntColors($paletteLength)
         );
     }
@@ -484,8 +411,7 @@ class ImagePalette implements \IteratorAggregate
     public function getHexStringColors($paletteLength = null)
     {
         return array_map(
-            // static method call
-            array('self', 'colorToHexString'),
+            'Bfoxwell\ImagePalette\ColorUtil::intToHexString',
             $this->getIntColors($paletteLength)
         );
     }
@@ -500,8 +426,7 @@ class ImagePalette implements \IteratorAggregate
     public function getRgbStringColors($paletteLength = null)
     {
         return array_map(
-            // static method call
-            array('self', 'rgbToString'),
+            'Bfoxwell\ImagePalette\ColorUtil::rgbToString',
             $this->getRgbColors($paletteLength)
         );
     }
