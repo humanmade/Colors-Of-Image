@@ -34,17 +34,22 @@ Simply add the following to your ```composer.json``` file:
 $palette = new \Bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
-$colors = $palette->colors;          // array('#ffffdd', ...)
-$colors = $palette->hexStringColors; // array('#ffffdd', ...)
-$colors = $palette->rgbStringColors; // array('rgb(255,0,15)', ...)
-$colors = $palette->intcolors;       // array(0xffffdd, ...)
-$colors = $palette->rgbColors;       // array(array(255, 0, 15), ...)
+$colors = $palette->colors; // array of Color objects
 
 // to string as json
 echo $palette; // '["#ffffdd", ... ]'
 
 // implements IteratorAggregate
-foreach ($palette as $color) { ... }
+foreach ($palette as $color) {
+  // Color provides several getters/properties
+  echo $color;             // '#ffffdd'
+  echo $color->rgbString;  // 'rgb(255,255,221)'
+  echo $color->argbString; // 'argb(255,255,221,0.25)'
+  echo $color->int;        // 0xffffdd
+  echo $color->rgb;        // array(255,255,221)
+  echo $color->argb;       // array(255,255,221,0.25)
+  // ...
+}
 ```
 
 And there we go!
@@ -77,17 +82,6 @@ $fileOrUrl = 'https://www.google.com/images/srpr/logo11w.png';
 ImagePalette::getColors($fileOrUrl);
 ```
 
-Result:
-```php
-array (
-  0 => '#0066cc',
-  1 => '#cc3333',
-  2 => '#ff9900',
-  3 => '#424153',
-  4 => '#cc6633',
-)
-```
-
 ### Options
 
 #### Precision
@@ -101,7 +95,7 @@ $palette = new \bfoxwell\ImagePalette\ImagePalette( $src, 5 /* precision */ );
 #### Color Count
 
 To control the amount colors returned set the third parameter.
-It can also be set for each getter.
+You can also provide the getter with a custom length.
 
 ```PHP
 $palette = new \bfoxwell\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors to return */ );
