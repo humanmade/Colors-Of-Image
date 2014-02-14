@@ -445,9 +445,9 @@ class ImagePalette implements \IteratorAggregate
      * an integer for each color
      * 
      * @param  int $paletteLength
-     * @return array
+     * @return int
      */
-    public function getColors($paletteLength = null)
+    public function getIntColors($paletteLength = null)
     {
         // allow custom length calls
         if (!is_numeric($paletteLength)) {
@@ -470,7 +470,7 @@ class ImagePalette implements \IteratorAggregate
         return array_map(
             // static method call
             array('self', 'colorToRgb'),
-            $this->getColors($paletteLength)
+            $this->getIntColors($paletteLength)
         );
     }
     
@@ -486,7 +486,7 @@ class ImagePalette implements \IteratorAggregate
         return array_map(
             // static method call
             array('self', 'colorToHexString'),
-            $this->getColors($paletteLength)
+            $this->getIntColors($paletteLength)
         );
     }
     
@@ -504,6 +504,18 @@ class ImagePalette implements \IteratorAggregate
             array('self', 'rgbToString'),
             $this->getRgbColors($paletteLength)
         );
+    }
+    
+    /**
+     * Alias for getHexStringColors for legacy support.
+     * 
+     * @deprecated  use one of the newer getters
+     * @param  int $paletteLength
+     * @return array
+     */
+    public function getColors($paletteLength = null)
+    {
+        return $this->getHexStringColors($paletteLength);
     }
     
     /**
@@ -535,7 +547,7 @@ class ImagePalette implements \IteratorAggregate
      * Used in foreach loops
      * 
      * @see  getColors()
-     * @return array
+     * @return \ArrayIterator
      */
     public function getIterator()
     {
