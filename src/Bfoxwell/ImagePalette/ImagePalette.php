@@ -3,13 +3,13 @@
  * This file is part of the ImagePalette package.
  *
  * (c) Brian Foxwell <brian@foxwell.io>
+ * (c) gandalfx
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 namespace Bfoxwell\ImagePalette;
-require_once('Color.php');
 
 use Bfoxwell\ImagePalette\Exception\UnsupportedFileTypeException;
 use Imagick;
@@ -88,12 +88,13 @@ class ImagePalette implements \IteratorAggregate
      */
     protected $lib;
 
-    /**
-     * Constructor
-     * @param string $file
-     * @param int $precision
-     * @param int $paletteLength
-     */
+	/**
+	 * Constructor
+	 * @param string $file
+	 * @param int $precision
+	 * @param int $paletteLength
+	 * @param null $overrideLib
+	 */
     public function __construct($file, $precision = 10, $paletteLength = 5, $overrideLib = null)
     {
         $this->file = $file;
@@ -122,11 +123,10 @@ class ImagePalette implements \IteratorAggregate
     }
 
 
-    /**
-     * Autodetect and pick a graphical library to use for processing.
-     * @param $lib
-     * @return string
-     */
+	/**
+	 * Autodetect and pick a graphical library to use for processing.
+	 * @return string
+	 */
     protected function detectLib()
     {
         try {
@@ -138,7 +138,6 @@ class ImagePalette implements \IteratorAggregate
                 
             } else if(extension_loaded('gmagick')) {
                 return 'Gmagick';
-                
             }
 
             throw new \Exception(
@@ -168,12 +167,10 @@ class ImagePalette implements \IteratorAggregate
             echo $e->getMessage() . "\n";
         }
     }
-    
-    /**
-     * Load and set the working image.
-     * @param $image
-     * @param string $image
-     */
+
+	/**
+	 * Load and set the working image.
+	 */
     protected function setWorkingImageGD()
     {
         $extension = pathinfo($this->file, PATHINFO_EXTENSION);
@@ -205,15 +202,13 @@ class ImagePalette implements \IteratorAggregate
             echo $e->getMessage() . "\n";
         }
     }
-    
-    /**
-     * Load and set working image
-     *
-     * @todo needs work
-     * @param $image
-     * @param string $image
-     * @return mixed
-     */
+
+	/**
+	 * Load and set working image
+	 *
+	 * @todo needs work
+	 * @return mixed
+	 */
     protected function setWorkingImageImagick()
     {
 
@@ -223,19 +218,17 @@ class ImagePalette implements \IteratorAggregate
 
         $this->loadedImage = new Imagick($temp);
     }
-    
-    /**
-     * Load and set working image
-     *
-     * @todo needs work
-     * @param $image
-     * @param string $image
-     * @return mixed
-     */
+
+	/**
+	 * Load and set working image
+	 *
+	 * @todo needs work
+	 * @throws \Exception
+	 * @return mixed
+	 */
     protected function setWorkingImageGmagick()
     {
         throw new \Exception("Gmagick not supported");
-        return null;
     }
     
     /**
@@ -326,7 +319,7 @@ class ImagePalette implements \IteratorAggregate
     }
     
     /**
-     * Using  to retrive color information about a specified pixel
+     * Using to retrieve color information about a specified pixel
      * 
      * @see  getPixelColor()
      * @param  int $x
@@ -347,7 +340,7 @@ class ImagePalette implements \IteratorAggregate
     }
     
     /**
-     * Using  to retrive color information about a specified pixel
+     * Using to retrieve color information about a specified pixel
      * 
      * @see  getPixelColor()
      * @param  int $x
@@ -356,7 +349,7 @@ class ImagePalette implements \IteratorAggregate
      */
     protected function getPixelColorImagick($x, $y)
     {
-        $rgb = $this->loadedImage->getImagePixelColor($x,$y)->getColor();
+        $rgb = $this->loadedImage->getImagePixelColor($x, $y)->getColor();
         
         return new Color(array(
             $rgb['r'],
@@ -367,8 +360,7 @@ class ImagePalette implements \IteratorAggregate
 
     protected function getPixelColorGmagick($x, $y)
     {
-        throw new \Exception("Gmagick not supported");
-        return;
+        throw new \Exception("Gmagick not supported: ($x, $y)");
     }
     
     /**
@@ -403,12 +395,14 @@ class ImagePalette implements \IteratorAggregate
             $this->getColors()
         ));
     }
-    
-    /**
-     * Convenient getter access as properties
-     * 
-     * @return  mixed
-     */
+
+	/**
+	 * Convenient getter access as properties
+	 *
+	 * @param $name
+	 * @throws \Exception
+	 * @return  mixed
+	 */
     public function __get($name)
     {
         $method = 'get' . ucfirst($name);
