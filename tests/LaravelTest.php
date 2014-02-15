@@ -22,7 +22,7 @@ class LaravelTest extends PHPUnit_Framework_Testcase {
     public function testDoesClientReturnArray()
     {
         $load = new Client;
-        $colors = $load->getColors('https://www.google.com/images/srpr/logo11w.png', 5);
+        $colors = $load->getColors(__DIR__.'/logo11w.png', 5);
         return $this->assertTrue(is_array($colors));
     }
 } 

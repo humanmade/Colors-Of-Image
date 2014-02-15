@@ -19,10 +19,8 @@ class ImagePaletteTest extends PHPUnit_Framework_Testcase
 	private $paletteObject;
 
     public function setUp() {
-        $this->paletteObject = new ImagePalette('https://www.google.com/images/srpr/logo11w.png', 5, 20);
+        $this->paletteObject = new ImagePalette(__DIR__.'/logo11w.png', 5, 20);
         $this->palette = $this->paletteObject->getColors();
-		$this->clientObject = new \Bfoxwell\ImagePalette\Client();
-
     }
 
     public function tearDown() {
@@ -41,14 +39,6 @@ class ImagePaletteTest extends PHPUnit_Framework_Testcase
 
     public function testIfContainsBlue()
     {
-		var_dump($this->palette);
         return $this->assertContains('#0066cc',$this->palette);
     }
-
-	public function testIfClientContainsBlue()
-	{
-		$data = $this->clientObject->getColors("https://www.google.com/images/srpr/logo11w.png");
-		var_dump($data);
-		return $this->assertContains('#0066cc', $data);
-	}
 } 
