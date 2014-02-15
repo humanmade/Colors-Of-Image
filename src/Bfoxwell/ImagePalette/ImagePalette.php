@@ -116,7 +116,8 @@ class ImagePalette implements \IteratorAggregate
         // sort whiteList accordingly
         $this->palette = array_map(
             function($color) {
-                return new Color($color);
+                $util = new Color($color);
+				return $util->toHexString();
             },
             array_keys($this->whiteList)
         );
@@ -371,6 +372,7 @@ class ImagePalette implements \IteratorAggregate
      */
     public function getColors($paletteLength = null)
     {
+
         // allow custom length calls
         if (!is_numeric($paletteLength)) {
             $paletteLength = $this->paletteLength;

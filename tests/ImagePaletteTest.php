@@ -41,12 +41,14 @@ class ImagePaletteTest extends PHPUnit_Framework_Testcase
 
     public function testIfContainsBlue()
     {
+		var_dump($this->palette);
         return $this->assertContains('#0066cc',$this->palette);
     }
 
 	public function testIfClientContainsBlue()
 	{
 		$data = $this->clientObject->getColors("https://www.google.com/images/srpr/logo11w.png");
+		var_dump($data);
 		return $this->assertContains('#0066cc', $data);
 	}
 } 
