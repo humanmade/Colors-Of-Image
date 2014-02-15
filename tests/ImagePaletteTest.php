@@ -16,10 +16,13 @@ use \Bfoxwell\ImagePalette\ImagePalette;
 class ImagePaletteTest extends PHPUnit_Framework_Testcase
 {
     private $palette;
+	private $paletteObject;
 
     public function setUp() {
         $this->paletteObject = new ImagePalette('https://www.google.com/images/srpr/logo11w.png', 5, 20);
         $this->palette = $this->paletteObject->getColors();
+		$this->clientObject = new \Bfoxwell\ImagePalette\Client();
+
     }
 
     public function tearDown() {
@@ -40,4 +43,10 @@ class ImagePaletteTest extends PHPUnit_Framework_Testcase
     {
         return $this->assertContains('#0066cc',$this->palette);
     }
+
+	public function testIfClientContainsBlue()
+	{
+		$data = $this->clientObject->getColors("https://www.google.com/images/srpr/logo11w.png");
+		return $this->assertContains('#0066cc', $data);
+	}
 } 
