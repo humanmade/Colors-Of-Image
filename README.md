@@ -1,5 +1,5 @@
 # ImagePalette
-[![Build Status](https://travis-ci.org/brianfoxwell/ImagePalette.png)](https://travis-ci.org/brianfoxwell/ImagePalette)
+[![Build Status](https://travis-ci.org/bfoxwell/ImagePalette.png)](https://travis-ci.org/bfoxwell/ImagePalette)
 [![Total Downloads](https://poser.pugx.org/bfoxwell/image-palette/downloads.png)](https://packagist.org/packages/bfoxwell/image-palette)
 [![Latest Stable Version](https://poser.pugx.org/bfoxwell/image-palette/v/stable.png)](https://packagist.org/packages/bfoxwell/image-palette)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/brianfoxwell/ImagePalette/badges/quality-score.png?s=b7d1cdecd013eb493c32a2e4f2c53058185b555e)](https://scrutinizer-ci.com/g/brianfoxwell/ImagePalette/)
