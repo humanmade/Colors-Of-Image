@@ -2,18 +2,20 @@
 /**
  * This file is part of the ImagePalette package.
  *
- * (c) Brian Foxwell <brian@foxwell.io>
+ * (c) Brian McDonald <brian@brianmcdonald.io>
+ * (c) gandalfx - https://github.com/gandalfx
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Bfoxwell\ImagePalette\Laravel;
+namespace BrianMcdo\ImagePalette\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Bfoxwell\ImagePalette\Client;
+use BrianMcdo\ImagePalette\Client;
 
-class ImagePaletteServiceProvider extends ServiceProvider {
+class ImagePaletteServiceProvider extends ServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -28,7 +30,7 @@ class ImagePaletteServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        $this->package('bfoxwell/image-palette');
+        $this->package('brianmcdo/image-palette');
     }
 
     /**
@@ -38,11 +40,10 @@ class ImagePaletteServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app['image-palette'] = $this->app->share(
-            function ($app) {
-                return new Client;
-            }
-        );
+        $this->app['image-palette'] = $this->app->share(function()
+        {
+            return new Client;
+        });
     }
 
     /**

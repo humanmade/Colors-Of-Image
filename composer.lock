@@ -1,37 +1,37 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
     "hash": "256aec7370963518cd6cb5c8d4b9c26b",
     "packages": [
         {
             "name": "illuminate/support",
-            "version": "v4.1.21",
+            "version": "v4.2.9",
             "target-dir": "Illuminate/Support",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "f6df9a5d9fac6b5fda1c94d2cd2847346967bdbc"
+                "reference": "b6716d34afce6e69523725f2534a5c3a54dba964"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/f6df9a5d9fac6b5fda1c94d2cd2847346967bdbc",
-                "reference": "f6df9a5d9fac6b5fda1c94d2cd2847346967bdbc",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/b6716d34afce6e69523725f2534a5c3a54dba964",
+                "reference": "b6716d34afce6e69523725f2534a5c3a54dba964",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.4.0"
             },
             "require-dev": {
-                "mockery/mockery": "0.7.2",
-                "patchwork/utf8": "1.1.*",
-                "phpunit/phpunit": "3.7.*"
+                "jeremeamia/superclosure": "~1.0",
+                "patchwork/utf8": "1.1.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.1-dev"
+                    "dev-master": "4.2-dev"
                 }
             },
             "autoload": {
@@ -49,29 +49,20 @@
             "authors": [
                 {
                     "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com",
-                    "homepage": "https://github.com/taylorotwell",
-                    "role": "Developer"
+                    "email": "taylorotwell@gmail.com"
                 }
             ],
-            "time": "2014-01-30 19:59:45"
+            "time": "2014-09-12 21:42:43"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": [],
+    "prefer-stable": false,
     "platform": {
         "php": ">=5.3.0",
         "ext-gd": "*"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }

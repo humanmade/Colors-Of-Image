@@ -2,17 +2,20 @@
 /**
  * This file is part of the ImagePalette package.
  *
- * (c) Brian Foxwell <brian@foxwell.io>
+ * (c) Brian McDonald <brian@brianmcdonald.io>
  * (c) gandalfx - https://github.com/gandalfx
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Bfoxwell\ImagePalette;
+namespace BrianMcdo\ImagePalette;
 
-use Bfoxwell\ImagePalette\Exception\UnsupportedFileTypeException;
+use ArrayIterator;
+use BrianMcdo\ImagePalette\Exception\UnsupportedFileTypeException;
+use Exception;
 use Imagick;
+use IteratorAggregate;
 
 /**
  * Class ImagePalette
@@ -20,9 +23,9 @@ use Imagick;
  * Gets the prominent colors in a given image. To get common color matching, all pixels are matched
  * against a white-listed color palette.
  *
- * @package bfoxwell\ImagePalette
+ * @package BrianMcdo\ImagePalette
  */
-class ImagePalette implements \IteratorAggregate
+class ImagePalette implements IteratorAggregate
 {
     /**
      * File or Url
@@ -93,60 +96,49 @@ class ImagePalette implements \IteratorAggregate
 	 * @param string $file
 	 * @param int $precision
 	 * @param int $paletteLength
-	 * @param null $overrideLib
+	 * @param string $library
 	 */
-    public function __construct($file, $precision = 10, $paletteLength = 5, $overrideLib = null)
+    public function __construct($file, $precision = 10, $paletteLength = 5, $library = 'gd')
     {
         $this->file = $file;
         $this->precision = $precision;
         $this->paletteLength = $paletteLength;
         
         // use provided libname or auto-detect
-        $this->lib = $overrideLib ? $overrideLib : $this->detectLib();
+        $this->lib = $this->graphicsLibrary($library);
         
         // create an array with color ints as keys
         $this->whiteList = array_fill_keys($this->whiteList, 0);
-        
-        // go!
+
         $this->process($this->lib);
-        
-        // sort whiteList
-        arsort($this->whiteList);
-        
-        // sort whiteList accordingly
-        $this->palette = array_map(
-            function($color) {
-                return new Color($color);
-            },
-            array_keys($this->whiteList)
-        );
     }
 
-
-	/**
-	 * Autodetect and pick a graphical library to use for processing.
-	 * @return string
-	 */
-    protected function detectLib()
+    /**
+     * Select graphics library to use for processing
+     *
+     * @param string $lib
+     * @return mixed
+     * @throws \Exception
+     */
+    protected function graphicsLibrary($lib = 'gd')
     {
-        try {
-            if (extension_loaded('gd') && function_exists('gd_info')) {
-                return 'GD';
-                
-            } else if(extension_loaded('imagick')) {
-                return 'Imagick';
-                
-            } else if(extension_loaded('gmagick')) {
-                return 'Gmagick';
-            }
+        $libraries = [
+            'gd' => 'GD',
+            'imagick' => 'Imagick',
+            //'gmagick' => [false, 'Gmagick']
+        ];
 
-            throw new \Exception(
-                "Try installing one of the following graphic libraries php5-gd, php5-imagick, php5-gmagick.
-            ");
-
-        } catch(\Exception $e) {
-            echo $e->getMessage() . "\n";
+        if( ! array_key_exists($lib, $libraries))
+        {
+            throw new Exception('This extension specified is not supported.');
         }
+
+        if( ! extension_loaded($lib))
+        {
+            throw new Exception('This extension is not installed');
+        }
+
+        return  $libraries[$lib];
     }
     
     /**
@@ -156,16 +148,21 @@ class ImagePalette implements \IteratorAggregate
      */
     protected function process($lib)
     {
-        try {
-            
-            $this->{'setWorkingImage' . $lib} ();
-            $this->{'setImagesize' . $lib} ();
-            
-            $this->readPixels();
-            
-        } catch(\Exception $e) {
-            echo $e->getMessage() . "\n";
-        }
+        $this->{'setWorkingImage' . $lib} ();
+        $this->{'setImagesize' . $lib} ();
+
+        $this->readPixels();
+
+        // sort whiteList
+        arsort($this->whiteList);
+
+        // sort whiteList accordingly
+        $this->palette = array_map(
+            function($color) {
+                return new Color($color);
+            },
+            array_keys($this->whiteList)
+        );
     }
 
 	/**
@@ -174,32 +171,28 @@ class ImagePalette implements \IteratorAggregate
     protected function setWorkingImageGD()
     {
         $extension = pathinfo($this->file, PATHINFO_EXTENSION);
-        try {
 
-            switch (strtolower($extension)) {
-                case "png":
-                    $this->loadedImage = imagecreatefrompng($this->file);
-                    break;
-                    
-                case "jpg":
-                case "jpeg":
-                    $this->loadedImage = imagecreatefromjpeg($this->file);
-                    break;
-                    
-                case "gif":
-                    $this->loadedImage = imagecreatefromgif($this->file);
-                    break;
-                    
-                case "bmp":
-                    $this->loadedImage = imagecreatefrombmp($this->file);
-                    break;
-                    
-                default:
-                    throw new UnsupportedFileTypeException("The file type .$extension is not supported.");
-            }
+        switch (strtolower($extension))
+        {
+            case "png":
+                $this->loadedImage = imagecreatefrompng($this->file);
+                break;
 
-        } catch (UnsupportedFileTypeException $e) {
-            echo $e->getMessage() . "\n";
+            case "jpg":
+            case "jpeg":
+                $this->loadedImage = imagecreatefromjpeg($this->file);
+                break;
+
+            case "gif":
+                $this->loadedImage = imagecreatefromgif($this->file);
+                break;
+
+            case "bmp":
+                $this->loadedImage = imagecreatefrombmp($this->file);
+                break;
+
+            default:
+                throw new UnsupportedFileTypeException("The file type .$extension is not supported.");
         }
     }
 
@@ -211,9 +204,10 @@ class ImagePalette implements \IteratorAggregate
 	 */
     protected function setWorkingImageImagick()
     {
-
         $file = file_get_contents($this->file);
-        $temp = tempnam("/tmp", uniqid("ImagePalette_",true));
+
+        $temp = tempnam("/tmp", uniqid("ImagePalette_", true));
+
         file_put_contents($temp, $file);
 
         $this->loadedImage = new Imagick($temp);
@@ -228,7 +222,7 @@ class ImagePalette implements \IteratorAggregate
 	 */
     protected function setWorkingImageGmagick()
     {
-        throw new \Exception("Gmagick not supported");
+        throw new Exception("Gmagick not supported");
     }
     
     /**
@@ -257,9 +251,11 @@ class ImagePalette implements \IteratorAggregate
     protected function readPixels()
     {
         // Row
-        for ($x = 0; $x < $this->width; $x += $this->precision) {
+        for ($x = 0; $x < $this->width; $x += $this->precision)
+        {
             // Column
-            for ($y = 0; $y < $this->height; $y += $this->precision) {
+            for ($y = 0; $y < $this->height; $y += $this->precision)
+            {
                 
                 $color = $this->getPixelColor($x, $y);
                 
@@ -287,13 +283,14 @@ class ImagePalette implements \IteratorAggregate
         // default to black so hhvm won't cry
         $bestColor = 0x000000;
         
-        foreach ($this->whiteList as $wlColor => $hits) {
-            
+        foreach ($this->whiteList as $wlColor => $hits)
+        {
             // calculate difference (don't sqrt)
             $diff = $color->getDiff($wlColor);
             
             // see if we got a new best
-            if ($diff < $bestDiff) {
+            if ($diff < $bestDiff)
+            {
                 $bestDiff = $diff;
                 $bestColor = $wlColor;
             }
@@ -329,7 +326,6 @@ class ImagePalette implements \IteratorAggregate
     protected function getPixelColorGD($x, $y)
     {
         $color = imagecolorat($this->loadedImage, $x, $y);
-        // $rgb = imagecolorsforindex($this->loadedImage, $color);
         
         return new Color (
             $color
@@ -351,16 +347,16 @@ class ImagePalette implements \IteratorAggregate
     {
         $rgb = $this->loadedImage->getImagePixelColor($x, $y)->getColor();
         
-        return new Color(array(
+        return new Color([
             $rgb['r'],
             $rgb['g'],
             $rgb['b'],
-        ));
+        ]);
     }
 
     protected function getPixelColorGmagick($x, $y)
     {
-        throw new \Exception("Gmagick not supported: ($x, $y)");
+        throw new Exception("Gmagick not supported: ($x, $y)");
     }
     
     /**
@@ -371,9 +367,9 @@ class ImagePalette implements \IteratorAggregate
      */
     public function getColors($paletteLength = null)
     {
-
         // allow custom length calls
-        if (!is_numeric($paletteLength)) {
+        if ( ! is_numeric($paletteLength))
+        {
             $paletteLength = $this->paletteLength;
         }
         
@@ -407,10 +403,13 @@ class ImagePalette implements \IteratorAggregate
     public function __get($name)
     {
         $method = 'get' . ucfirst($name);
-        if (method_exists($this, $method)) {
+
+        if (method_exists($this, $method))
+        {
             return $this->$method();
         }
-        throw new \Exception("Method $method does not exist");
+
+        throw new Exception("Method $method does not exist");
     }
     
     /**
@@ -422,6 +421,6 @@ class ImagePalette implements \IteratorAggregate
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->getColors());
+        return new ArrayIterator($this->getColors());
     }
 }

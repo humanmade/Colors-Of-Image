@@ -1,7 +1,7 @@
 # ImagePalette
-[![Build Status](https://travis-ci.org/bfoxwell/ImagePalette.png)](https://travis-ci.org/bfoxwell/ImagePalette)
-[![Total Downloads](https://poser.pugx.org/bfoxwell/image-palette/downloads.png)](https://packagist.org/packages/bfoxwell/image-palette)
-[![Latest Stable Version](https://poser.pugx.org/bfoxwell/image-palette/v/stable.png)](https://packagist.org/packages/bfoxwell/image-palette)
+[![Build Status](https://travis-ci.org/brianmcdo/ImagePalette.png)](https://travis-ci.org/brianmcdo/ImagePalette)
+[![Total Downloads](https://poser.pugx.org/brianmcdo/image-palette/downloads.png)](https://packagist.org/packages/brianmcdo/image-palette)
+[![Latest Stable Version](https://poser.pugx.org/brianmcdo/image-palette/v/stable.png)](https://packagist.org/packages/brianmcdo/image-palette)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/brianfoxwell/ImagePalette/badges/quality-score.png?s=b7d1cdecd013eb493c32a2e4f2c53058185b555e)](https://scrutinizer-ci.com/g/brianfoxwell/ImagePalette/)
 
 ImagePalette is used to extract a color palette from a given image. Aside from being a native PHP implementation, ImagePalette differs from many palette extractors as it works off a white list color palette. Below is the default palette:
@@ -23,7 +23,7 @@ Simply add the following to your ```composer.json``` file:
 
 ```JSON
 "require": {
-    "bfoxwell/image-palette": "dev-master"
+    "brianmcdo/image-palette": "dev-master"
 }
 ```
 
@@ -31,7 +31,7 @@ Simply add the following to your ```composer.json``` file:
 
 ```PHP
 // initiate with image
-$palette = new \Bfoxwell\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
+$palette = new \BrianMcdo\ImagePalette\ImagePalette( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
 $colors = $palette->colors; // array of Color objects
@@ -61,7 +61,7 @@ Find the `providers` key in `app/config/app.php` and register the `ImagePaletteS
 ```php
 'providers' => array(
     // ...
-    'Bfoxwell\ImagePalette\Laravel\ImagePaletteServiceProvider',
+    'BrianMcdo\ImagePalette\Laravel\ImagePaletteServiceProvider',
 )
 ```
 
@@ -70,7 +70,7 @@ Then, find the `aliases` key in `app/config/app.php` and register the `ImagePale
 ```php
 'aliases' => array(
     // ...
-    'ImagePalette' => 'Bfoxwell\ImagePalette\Laravel\ImagePaletteFacade',
+    'ImagePalette' => 'BrianMcdo\ImagePalette\Laravel\ImagePaletteFacade',
 )
 ```
 
@@ -89,7 +89,7 @@ ImagePalette::getColors($fileOrUrl);
 By default, `ImagePalette` will process every 10th pixel. This is for performance reasons, you can change this like below. The precision is a performance-to-time decision.
 
 ```PHP
-$palette = new \Bfoxwell\ImagePalette\ImagePalette( $src, 5 /* precision */ );
+$palette = new \BrianMcdo\ImagePalette\ImagePalette( $src, 5 /* precision */ );
 ```
 
 #### Color Count
@@ -98,13 +98,13 @@ To control the amount colors returned set the third parameter.
 You can also provide the getter with a custom length.
 
 ```PHP
-$palette = new \Bfoxwell\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors to return */ );
+$palette = new \BrianMcdo\ImagePalette\ImagePalette( $src, 5, 3 /* number of colors to return */ );
 $colors = $palette->getColors(7 /* number of colors to return */);
 ```
 
 ## Contribution guidelines ##
 
-See: https://github.com/brianfoxwell/ImagePalette/blob/master/CONTRIBUTING.md
+See: https://github.com/brianmcdo/ImagePalette/blob/master/CONTRIBUTING.md
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/brianfoxwell/imagepalette/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

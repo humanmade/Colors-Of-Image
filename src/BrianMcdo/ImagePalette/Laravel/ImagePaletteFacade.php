@@ -2,19 +2,20 @@
 /**
  * This file is part of the ImagePalette package.
  *
- * (c) Brian Foxwell <brian@foxwell.io>
+ * (c) Brian McDonald <brian@brianmcdonald.io>
+ * (c) gandalfx - https://github.com/gandalfx
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Bfoxwell\ImagePalette\Laravel;
+namespace BrianMcdo\ImagePalette\Laravel;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * Class ImagePaletteFacade
- * @package bfoxwell\ImagePalette\Laravel
+ * @package BrianMcdo\ImagePalette\Laravel
  */
 class ImagePaletteFacade extends Facade
 {
