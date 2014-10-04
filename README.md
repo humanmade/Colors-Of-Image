@@ -12,10 +12,10 @@ The main advantage of working from a color palette is closer matching, as each p
 
 ![](http://i.imgur.com/O8fsFWz.png)
 
-See an example of this in action here: http://wallbase.cc/wallpaper/377921
+See an example of this in action here: http://alpha.wallhaven.cc/wallpaper/21852
 
 ## Requirements
-```PHP >= 5.3``` ```php5-gd```
+```PHP >= 5.4``` ```php5-gd```
 
 ## Installation
 
