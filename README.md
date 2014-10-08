@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/brianmcdo/ImagePalette.png)](https://travis-ci.org/brianmcdo/ImagePalette)
 [![Total Downloads](https://poser.pugx.org/brianmcdo/image-palette/downloads.png)](https://packagist.org/packages/brianmcdo/image-palette)
 [![Latest Stable Version](https://poser.pugx.org/brianmcdo/image-palette/v/stable.png)](https://packagist.org/packages/brianmcdo/image-palette)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/brianfoxwell/ImagePalette/badges/quality-score.png?s=b7d1cdecd013eb493c32a2e4f2c53058185b555e)](https://scrutinizer-ci.com/g/brianfoxwell/ImagePalette/)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/brianmcdo/ImagePalette/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/brianmcdo/ImagePalette/?branch=master)
 
 ImagePalette is used to extract a color palette from a given image. Aside from being a native PHP implementation, ImagePalette differs from many palette extractors as it works off a white list color palette. Below is the default palette:
 
