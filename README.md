@@ -106,6 +106,3 @@ $colors = $palette->getColors(7 /* number of colors to return */);
 
 See: https://github.com/brianmcdo/ImagePalette/blob/master/CONTRIBUTING.md
 
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/brianfoxwell/imagepalette/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
