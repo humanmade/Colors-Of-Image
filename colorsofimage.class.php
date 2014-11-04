@@ -50,21 +50,19 @@ class ColorsOfImage {
 		$image 		= $this->image;
 		$width 		= $this->width;
 		$height 	= $this->height;
-		$arrayex 	= explode( '.', $image );
-		$typeOfImage= end( $arrayex );
 	
 		try {
-			switch ( $typeOfImage ) {
-				case "png":
+			switch ( exif_imagetype($image) ) {
+				case IMAGETYPE_PNG:
 					$outputimg = "imagecreatefrompng";
 					break;
-				case "jpg":
+				case IMAGETYPE_JPEG:
 					$outputimg = "imagecreatefromjpeg";
 				break;
-				case "gif":
+				case IMAGETYPE_GIF:
 					$outputimg = "imagecreatefromgif";
 					break;
-				case "bpm":
+				case IMAGETYPE_BMP:
 					$outputimg = "imagecreatefrombmp";
 					break;
 				default: return;
