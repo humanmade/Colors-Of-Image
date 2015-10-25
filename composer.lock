@@ -1,67 +1,20 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "256aec7370963518cd6cb5c8d4b9c26b",
-    "packages": [
-        {
-            "name": "illuminate/support",
-            "version": "v4.2.9",
-            "target-dir": "Illuminate/Support",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/support.git",
-                "reference": "b6716d34afce6e69523725f2534a5c3a54dba964"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/b6716d34afce6e69523725f2534a5c3a54dba964",
-                "reference": "b6716d34afce6e69523725f2534a5c3a54dba964",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "jeremeamia/superclosure": "~1.0",
-                "patchwork/utf8": "1.1.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Illuminate\\Support": ""
-                },
-                "files": [
-                    "Illuminate/Support/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com"
-                }
-            ],
-            "time": "2014-09-12 21:42:43"
-        }
-    ],
+    "hash": "4633e50f83ee06d50937fe5458207748",
+    "content-hash": "7c9a88ae6081d141387a34cd52bc20d0",
+    "packages": [],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.0",
+        "php": ">=5.4.0",
         "ext-gd": "*"
     },
     "platform-dev": []

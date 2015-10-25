@@ -12,6 +12,11 @@
             "email": "brian@brianmcdonald.io",
             "homepage": "http://brianmcdonald.io",
             "role": "Developer"
+        },
+        {
+            "name": "Gandalf the Grey",
+            "homepage": "https://github.com/gandalfx",
+            "role": "Developer"
         }
     ],
     "replace": {
@@ -19,8 +24,7 @@
     },
     "require": {
         "php": ">=5.4.0",
-        "ext-gd": "*",
-        "illuminate/support": "4.x"
+        "ext-gd": "*"
     },
     "autoload": {
         "psr-4": {
