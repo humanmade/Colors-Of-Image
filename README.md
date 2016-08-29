@@ -21,7 +21,7 @@ __________
 $image = new ColorsOfImage( 'https://www.google.co.uk/images/srpr/logo3w.png' );
 
 // get the prominent colors
-$colors = $image->getProminentColors(); // array( '#FFFDD', ... )
+$colors = $image->getProminentColors(); // array( '#FFFFDD', ... )
 ```
 
 And there we go! 
